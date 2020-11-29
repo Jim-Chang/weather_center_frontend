@@ -1,0 +1,50 @@
+version: '2.3'
+services:
+  # postgres:
+  #   image: postgres:9.5
+  #   container_name: chatbot-service-db
+  #   restart: always
+  #   volumes:
+  #     - ./init-docker-db:/docker-entrypoint-initdb.d/
+  #     - db:/var/lib/postgresql/
+  #   networks:
+  #     - chatbot-service
+  #   environment:
+  #     - POSTGRES_PASSWORD=postgres
+
+  redis:
+    image: redis:6.0.9-alpine
+    container_name: chatbot-service-redis
+    restart: always
+    networks:
+      - chatbot-service
+
+  chatbot-service:
+    image: chatbot-service:latest
+    container_name: chatbot-service
+    entrypoint: sleep infinity  # for develop use
+    # depends_on:
+    #   - postgres
+    restart: always
+    volumes:
+      - ./app:/app
+    ports:
+      - "8001:8080"
+    networks:
+      - chatbot-service
+    environment:
+      ENV: "local"
+      DEBUG: "True"
+      
+      REDIS_NODE: "redis:6379"
+      CELERY_WORKER_NUM: 2
+
+
+networks:
+  chatbot-service:
+    name: chatbot-service-network
+    driver: bridge
+
+# volumes:
+#   db:
+#     name: chatbot-service-db-data

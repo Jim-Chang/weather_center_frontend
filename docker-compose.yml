@@ -1,0 +1,53 @@
+version: '2.3'
+services:
+  chatbot-service--http_adapter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chatbot-service:1.0.0
+    container_name: chatbot-service--http_adapter
+    restart: always
+    ports:
+      - "8001:8080"
+    networks:
+      - chatbot-service
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
+    #   interval: 1m
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 30s
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-region: "ap-northeast-1"
+        awslogs-group: "/prod/microservice/chatbot-service"
+        awslogs-stream: "chatbot-service--http_adapter"
+    environment:
+      ENV: "prod"
+      SERVE_MODE: "http_adapter"
+
+  chatbot-service--celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chatbot-service:1.0.0
+    container_name: chatbot-service--celery_worker
+    restart: always
+    networks:
+      - chatbot-service
+    logging:
+      driver: "awslogs"
+      options:
+        awslogs-region: "ap-northeast-1"
+        awslogs-group: "/prod/microservice/chatbot-service"
+        awslogs-stream: "chatbot-service--celery_worker"
+    environment:
+      ENV: "prod"
+      SERVE_MODE: "celery_worker"
+      CELERY_WORKER_NUM: 4
+
+networks:
+  chatbot-service:
+    name: chatbot-service-network
+    driver: bridge
