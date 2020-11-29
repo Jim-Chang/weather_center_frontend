@@ -1,5 +1,12 @@
 version: '2.3'
 services:
+  redis:
+    image: redis:6.0.9-alpine
+    container_name: chatbot-service-redis
+    restart: always
+    networks:
+      - chatbot-service
+
   chatbot-service--http_adapter:
     build:
       context: .
@@ -11,6 +18,7 @@ services:
       - "8001:8080"
     networks:
       - chatbot-service
+    mem_limit: 300M
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
     #   interval: 1m
@@ -18,14 +26,15 @@ services:
     #   retries: 5
     #   start_period: 30s
     logging:
-      driver: "awslogs"
+      driver: "json-file"
       options:
-        awslogs-region: "ap-northeast-1"
-        awslogs-group: "/prod/microservice/chatbot-service"
-        awslogs-stream: "chatbot-service--http_adapter"
+        max-size: "1k"
+        max-file: "3"
     environment:
       ENV: "prod"
       SERVE_MODE: "http_adapter"
+      LINE_CHANNEL_ACCESS_TOKEN: "bBjmpT4vqeJ44Dz73JZTevOqFbbYaQuS66C6UTJFdoDZ2GwQgLASkoM/HBqhcWJsfIDJCZoZEICqotlggFlYo/M4ea605jKJy7SoNbxGrYylzl2CTVKcE+/uIp3MQSqurIJMNPFNjgICiggp0bRCcgdB04t89/1O/w1cDnyilFU="
+      LINE_CHANNEL_SECRET: "eb46f7b90daecfa30c6d959ac339cea4"
 
   chatbot-service--celery_worker:
     build:
@@ -34,17 +43,20 @@ services:
     image: chatbot-service:1.0.0
     container_name: chatbot-service--celery_worker
     restart: always
+    depends_on:
+      - redis
     networks:
       - chatbot-service
+    mem_limit: 300M
     logging:
-      driver: "awslogs"
+      driver: "json-file"
       options:
-        awslogs-region: "ap-northeast-1"
-        awslogs-group: "/prod/microservice/chatbot-service"
-        awslogs-stream: "chatbot-service--celery_worker"
+        max-size: "1k"
+        max-file: "3"
     environment:
       ENV: "prod"
       SERVE_MODE: "celery_worker"
+      REDIS_NODE: "redis:6379"
       CELERY_WORKER_NUM: 4
 
 networks:
