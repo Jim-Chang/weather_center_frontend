@@ -4,7 +4,7 @@ from flask import Flask
 import settings
 
 from presentation.configure.chatbot_api_configure import IChatbotApiConfigure, RealChatbotApiConfigure
-from presentation.http.line_webhook_api import line_message_webhook_api
+from presentation.http.line_message_webhook_api import line_message_webhook_api
 
 def get_app(
     chatbot_api_configure: IChatbotApiConfigure = RealChatbotApiConfigure(),
