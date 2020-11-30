@@ -43,6 +43,8 @@ services:
     image: chatbot-service:1.0.0
     container_name: chatbot-service--celery_worker
     restart: always
+    volumes:
+      - /home/jim/.config/rclone:/home/chatbot/.config/rclone
     depends_on:
       - redis
     networks:

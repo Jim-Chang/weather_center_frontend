@@ -6,7 +6,7 @@ RUN useradd -r -u 1010 -g chatbot chatbot
 
 RUN apt-get update && \
 	apt-get upgrade -yqq && \
-	apt-get install -y build-essential libpq-dev python3-dev && \
+	apt-get install -y build-essential libpq-dev python3-dev rclone && \
 	apt-get clean -yqq && \
 	apt-get autoclean -yqq && \
 	apt-get autoremove -yqq && \
@@ -18,5 +18,6 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 COPY app /app
 
 RUN chown -R chatbot /app
+RUN mkdir -p /home/chatbot/.config/rclone && chown -R chatbot /home/chatbot
 USER chatbot
 ENTRYPOINT ["sh", "entrypoint.sh"]
