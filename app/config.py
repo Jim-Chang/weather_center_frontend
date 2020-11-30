@@ -11,3 +11,5 @@ REDIS_NODE = os.environ.get('REDIS_NODE', '')
 
 # celery queue names
 CHATBOT_SERVICE_CELERY_QUEUE = 'chatbot-service'
+
+DOWNLOAD_FOLDER_PATH = '/app/download/{}'
