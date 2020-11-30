@@ -6,7 +6,7 @@ RUN useradd -r -u 1010 -g chatbot chatbot
 
 RUN apt-get update && \
 	apt-get upgrade -yqq && \
-	apt-get install -y build-essential libpq-dev python3-dev rclone && \
+	apt-get install -y build-essential libpq-dev python3-dev rclone ffmpeg && \
 	apt-get clean -yqq && \
 	apt-get autoclean -yqq && \
 	apt-get autoremove -yqq && \
