@@ -29,7 +29,7 @@ services:
     restart: always
     volumes:
       - ./app:/app
-      - /home/jim/.config/rclone:/home/chatbot/.config/rclone
+      - $HOME/.config/rclone:/home/chatbot/.config/rclone
     ports:
       - "8001:8080"
     networks:
