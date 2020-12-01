@@ -29,6 +29,7 @@ services:
     restart: always
     volumes:
       - ./app:/app
+      - ./download:/download
       - $HOME/.config/rclone:/home/chatbot/.config/rclone
     ports:
       - "8001:8080"

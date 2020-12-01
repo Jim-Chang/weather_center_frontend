@@ -18,6 +18,9 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 COPY app /app
 
 RUN chown -R chatbot /app
-RUN mkdir -p /home/chatbot/.config/rclone && chown -R chatbot /home/chatbot
+RUN mkdir -p /home/chatbot/.config/rclone && \
+	chown -R chatbot /home/chatbot && \
+	mkdir /download && \
+	chown -R chatbot /download
 USER chatbot
 ENTRYPOINT ["sh", "entrypoint.sh"]
