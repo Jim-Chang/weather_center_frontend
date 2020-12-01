@@ -31,8 +31,16 @@ class YoutubedlDownloader:
 
     def _get_filename(self, url: str) -> str:
         result = check_output(['youtube-dl', '--get-filename', url])
-        return result.decode().replace('\n', '')
+        # return result.decode().replace('\n', '')
+        # 因為 ffmpeg 4.1.2 merge 的時候只能下 mkv，所以我們將副檔名改為 mkv
+        # 4.3 以後就可以了
+        return result.decode().replace('\n', '').replace('.mp4', '.mkv')
 
     def _run_download(self, filename: str, url: str) -> List[str]:
-        result = check_output(['youtube-dl', '-o', settings.DOWNLOAD_FOLDER_PATH.format(filename), url])
+        result = check_output([
+            'youtube-dl',
+            '-f', 'bestvideo+bestaudio',
+            '--merge-output-format', 'mkv'  # 因應 ffmpeg 4.1.2 所以改成 mkv
+            '-o', settings.DOWNLOAD_FOLDER_PATH.format(filename),
+            url])
         return result.decode().split('\n')
