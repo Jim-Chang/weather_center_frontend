@@ -40,7 +40,7 @@ class YoutubedlDownloader:
         result = check_output([
             'youtube-dl',
             '-f', 'bestvideo+bestaudio',
-            '--merge-output-format', 'mkv'  # 因應 ffmpeg 4.1.2 所以改成 mkv
+            '--merge-output-format', 'mkv',  # 因應 ffmpeg 4.1.2 所以改成 mkv
             '-o', settings.DOWNLOAD_FOLDER_PATH.format(filename),
             url])
         return result.decode().split('\n')
