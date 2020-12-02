@@ -16,3 +16,4 @@ celery==5.0.2
 redis==3.5.3
 line-bot-sdk==1.17.0
 youtube-dl==2020.11.26
+validators==0.18.1
