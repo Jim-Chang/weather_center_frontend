@@ -40,7 +40,7 @@ class LineCallbackController:
 
     def _send_sorry_msg(self, event: Event):
         message = '收到 {} 但我看不懂所以略過'.format(type(event))
-        send_line_msg_tasks.set_text_message.apply_async(args=(event.reply_token, message,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+        send_line_msg_tasks.send_text_message.apply_async(args=(event.reply_token, message,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
 
     def _dispatch_command(self, event: Event):
-        send_line_msg_tasks.set_text_message.apply_async(args=(event.reply_token, event.message.text,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+        send_line_msg_tasks.send_text_message.apply_async(args=(event.reply_token, event.message.text,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
