@@ -10,7 +10,7 @@ HTTP_PORT = 8080
 REDIS_NODE = os.environ.get('REDIS_NODE', '')
 
 # celery queue names
-CHATBOT_SERVICE_CELERY_QUEUE = 'chatbot-service'
+CHATBOT_SERVICE_CELERY_QUEUE = os.environ.get('CELERY_QUEUE_NAME', '')
 
 DOWNLOAD_FOLDER_PATH = '/download/{}'
 RCLONE_CONFIG_NAME = 'chatbot-upload'

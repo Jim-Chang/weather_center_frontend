@@ -10,7 +10,7 @@ then
 elif [ "$SERVE_MODE" = "celery_worker" ]
 then
 	echo "SERVE MODE: celery_worker"
-	celery --app celery_app worker --concurrency $CELERY_WORKER_NUM --queues pm-service --loglevel INFO
+	celery --app celery_app worker --concurrency $CELERY_WORKER_NUM --queues $CELERY_QUEUE_NAME --loglevel INFO
 
 # container only run migrate
 elif [ "$SERVE_MODE" = "run_migrate" ]
