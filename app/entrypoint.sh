@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # http_adapter mode
-elif [ "$SERVE_MODE" = "http_adapter" ]
+if [ "$SERVE_MODE" = "http_adapter" ]
 then
 	echo "SERVE MODE: http_adapter"
 	uwsgi --ini uwsgi.ini
