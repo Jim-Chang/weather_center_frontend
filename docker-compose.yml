@@ -6,6 +6,7 @@ services:
     restart: always
     networks:
       - chatbot-service
+    mem_limit: 150M
 
   chatbot-service--http_adapter:
     build:
