@@ -48,7 +48,7 @@ services:
     container_name: chatbot-service--celery_worker
     restart: always
     volumes:
-      - $HOME/.config/rclone/rclone.conf:/home/chatbot/.config/rclone/rclone.conf:ro  # linux 的 rclone config 需改成 644
+      - $HOME/.config/rclone:/home/chatbot/.config/rclone  # linux 的 rclone 需改成 777
     depends_on:
       - redis
     networks:

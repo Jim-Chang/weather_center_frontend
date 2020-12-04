@@ -12,15 +12,17 @@ RUN apt-get update && \
 	apt-get autoremove -yqq && \
 	rm -rf /var/cache/apt/archives/* /var/cache/apt/*.bin /var/lib/apt/lists/*
 
+RUN mkdir -p /home/chatbot/.config/rclone && \
+	chown -R chatbot /home/chatbot && \
+	mkdir /download && \
+	chown -R chatbot /download
+
 WORKDIR /app
 COPY app/requirements.txt /app/requirements.txt 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 COPY app /app
 
 RUN chown -R chatbot /app
-RUN mkdir -p /home/chatbot/.config/rclone && \
-	chown -R chatbot /home/chatbot && \
-	mkdir /download && \
-	chown -R chatbot /download
+
 USER chatbot
 ENTRYPOINT ["sh", "entrypoint.sh"]
