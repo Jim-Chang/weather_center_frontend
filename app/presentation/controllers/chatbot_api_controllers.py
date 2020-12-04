@@ -46,4 +46,4 @@ class LineCallbackController:
             command_func(event)
 
         else:
-            async_send_text_message(event.reply_token, '不是網址，所以略過～')
+            async_send_text_message(event.reply_token, '不是指令清單裡，所以略過～')
