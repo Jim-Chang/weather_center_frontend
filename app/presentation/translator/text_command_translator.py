@@ -4,6 +4,7 @@ from application.command.chat_bot_commands import run_download_and_upload_task_c
 
 class TextCommandTranslator:
 
+    # <command_key>: <command_func>
     command_map = {
 
     }

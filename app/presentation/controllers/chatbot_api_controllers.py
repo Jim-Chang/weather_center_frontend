@@ -1,8 +1,8 @@
 from typing import List
 import settings
-import validators
-from tasks import send_line_msg_tasks
-from tasks.download_and_upload_task import do_download_and_upload_task
+
+from presentation.translator.text_command_translator import TextCommandTranslator
+from tasks.send_line_msg_tasks import async_send_text_message
 
 from linebot import WebhookParser
 from linebot.exceptions import InvalidSignatureError
@@ -17,6 +17,7 @@ class LineCallbackController:
     def __init__(self, request_body: dict, signature: str):
         self._request_body = request_body
         self._signature = signature
+        self._translator = TextCommandTranslator()
 
     def handle(self) -> bool:
         events = self._extract_events(self._request_body, self._signature)
@@ -26,7 +27,7 @@ class LineCallbackController:
                 self._dispatch_command(event)
             
             else:
-                self._send_sorry_msg(event)
+                async_send_text_message(event.reply_token, '這個我還看不懂所以略過哦')
 
         return True
 
@@ -39,17 +40,10 @@ class LineCallbackController:
         except InvalidSignatureError:
             raise
 
-    def _send_sorry_msg(self, event: Event):
-        message = '收到 {} 但我看不懂所以略過'.format(type(event))
-        self._send_text_message(event.reply_token, message)
-
     def _dispatch_command(self, event: Event):
-        if validators.url(event.message.text):
-            self._send_text_message(event.reply_token, '收到網址，啟動 youtube-dl')
-            do_download_and_upload_task.apply_async(args=(event.reply_token, event.message.text,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+        command_func = self._translator.decode_command(event.message.text)
+        if command_func:
+            command_func(event)
 
         else:
-            self._send_text_message(event.reply_token, '不是網址，所以略過～')
-
-    def _send_text_message(self, reply_token: str, message: str):
-        send_line_msg_tasks.send_text_message.apply_async(args=(reply_token, message,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+            async_send_text_message(event.reply_token, '不是網址，所以略過～')
