@@ -27,7 +27,8 @@ class LineCallbackController:
                 self._dispatch_command(event)
             
             else:
-                async_send_text_message(event.reply_token, '這個我還看不懂所以略過哦')
+                print('in')
+                async_send_text_message(event.source.user_id, '這個我還看不懂所以略過哦')
 
         return True
 
@@ -46,4 +47,4 @@ class LineCallbackController:
             command_func(event)
 
         else:
-            async_send_text_message(event.reply_token, '不是指令清單裡，所以略過～')
+            async_send_text_message(event.source.user_id, '不是指令清單裡，所以略過～')

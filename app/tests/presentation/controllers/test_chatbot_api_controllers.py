@@ -28,12 +28,12 @@ def test_line_callback_controller__text_message(mock_method, stub_line_signature
     assert controller.handle() is True
     mock_method.assert_called_once()
 
-@pytest.mark.in_memory
-@patch('presentation.controllers.chatbot_api_controllers.LineCallbackController._send_sorry_msg')
-def test_line_callback_controller__image_message(mock_method, stub_line_signature_validator, unstub):
-    with open('tests/files/line__image_message.json', 'r') as f:
-        data = f.read()
+# @pytest.mark.in_memory
+# @patch('tasks.send_line_msg_tasks.async_send_text_message')
+# def test_line_callback_controller__image_message(mock_method, stub_line_signature_validator, unstub):
+#     with open('tests/files/line__image_message.json', 'r') as f:
+#         data = f.read()
 
-    controller = LineCallbackController(data, '')
-    assert controller.handle() is True
-    mock_method.assert_called_once()
+#     controller = LineCallbackController(data, '')
+#     assert controller.handle() is True
+#     mock_method.assert_called_once_with('U4af4980629...', '這個我還看不懂所以略過哦')
