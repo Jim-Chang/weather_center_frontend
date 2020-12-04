@@ -30,7 +30,7 @@ services:
     volumes:
       - ./app:/app
       - ./download:/download
-      - $HOME/.config/rclone:/home/chatbot/.config/rclone:ro  # linux 的 rclone config 需改成 644
+      - $HOME/.config/rclone/rclone.conf:/home/chatbot/.config/rclone/rclone.conf:ro  # linux 的 rclone config 需改成 644
     ports:
       - "8001:8080"
     networks:
