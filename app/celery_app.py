@@ -7,6 +7,7 @@ app = Celery(
     backend='redis://' + settings.REDIS_NODE,
     include=[
         'tasks.send_line_msg_tasks',
+        'tasks.download_and_upload_task',
     ]
 )
 
