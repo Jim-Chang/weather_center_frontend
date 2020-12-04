@@ -27,7 +27,6 @@ class LineCallbackController:
                 self._dispatch_command(event)
             
             else:
-                print('in')
                 async_send_text_message(event.source.user_id, '這個我還看不懂所以略過哦')
 
         return True
