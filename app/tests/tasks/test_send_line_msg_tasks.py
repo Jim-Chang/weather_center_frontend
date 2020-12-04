@@ -7,12 +7,12 @@ from linebot.models import TextSendMessage
 @pytest.mark.celery
 @pytest.mark.usefixtures('celery_session_app')
 @pytest.mark.usefixtures('celery_session_worker')
-@patch('linebot.LineBotApi.reply_message')
+@patch('linebot.LineBotApi.push_message')
 def test_send_text_message(mock_method):
-    tasks.send_text_message('fake token', 'fake msg')
-    mock_method.assert_called_once_with('fake token', TextSendMessage(text='fake msg'))
+    tasks.send_text_message('fake user id', 'fake msg')
+    mock_method.assert_called_once_with('fake user id', TextSendMessage(text='fake msg'))
 
 @patch('tasks.send_line_msg_tasks.send_text_message.apply_async')
 def test_async_send_text_message(mock_method):
-    tasks.async_send_text_message('fake token', 'fake msg')
+    tasks.async_send_text_message('fake user id', 'fake msg')
     mock_method.assert_called_once()
