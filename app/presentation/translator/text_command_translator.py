@@ -1,12 +1,15 @@
 from typing import Type, Optional
 import validators
-from application.command.chat_bot_commands import run_download_and_upload_task_command
+from application.command.chat_bot_commands import (
+    run_download_and_upload_task_command,
+    run_refresh_cache_for_wp_command,
+)
 
 class TextCommandTranslator:
 
     # <command_key>: <command_func>
     command_map = {
-
+        '刷新部落格': run_refresh_cache_for_wp_command,
     }
 
     def decode_command(self, command: str) -> Optional[Type]:
