@@ -34,7 +34,8 @@ class YoutubedlDownloader:
         # return result.decode().replace('\n', '')
         # 因為 ffmpeg 4.1.2 merge 的時候只能下 mkv，所以我們將副檔名改為 mkv
         # 4.3 以後就可以了
-        return result.decode().replace('\n', '').replace('.mp4', '.mkv')
+        filename = result.decode().replace('\n', '').split('.')[0]
+        return filename + '.mkv'
 
     def _run_download(self, filename: str, url: str) -> List[str]:
         result = check_output([
