@@ -8,6 +8,7 @@ app = Celery(
     include=[
         'tasks.send_line_msg_tasks',
         'tasks.download_and_upload_task',
+        'tasks.refresh_cache_for_wp_task',
     ]
 )
 
