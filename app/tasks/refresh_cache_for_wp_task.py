@@ -13,7 +13,7 @@ def async_refresh_cache_for_wp_task(user_id: str):
 
 @app.task
 def refresh_cache_for_wp_task(user_id: str):
-    async_send_text_message(user_id, '開始刷新 KodingWork 的 Cloudflare cache，正取得所有可用網址')
+    async_send_text_message(user_id, '開始刷新 KodingWork 的 Cloudflare cache\n\n正取得所有可用網址')
     urls = get_all_avaliable_urls()
 
     async_send_text_message(user_id, '正在清掉 Cloudflare cache')

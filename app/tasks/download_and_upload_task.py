@@ -25,9 +25,9 @@ class DownloadAndUploadTask:
         download_result, filename, filesize = self._start_download()
 
         if download_result:
-            async_send_text_message(self._user_id, '下載完成！檔案名稱為：{}，共 {} MB，開始上傳 Google Drive'.format(filename, filesize))
+            async_send_text_message(self._user_id, '下載完成！檔案名稱為：{}\n\n共 {} MB\n\n開始上傳 Google Drive'.format(filename, filesize))
             upload_result = self._start_upload(filename)
-            async_send_text_message(self._user_id, '{} 上傳成功！'.format(filename) if upload_result else '{} 上傳失敗...'.format(filename))
+            async_send_text_message(self._user_id, '{}\n\n上傳成功！'.format(filename) if upload_result else '{}\n\n上傳失敗...'.format(filename))
 
         else:
             async_send_text_message(self._user_id, '下載失敗哭哭')
