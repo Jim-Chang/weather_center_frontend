@@ -53,7 +53,7 @@ services:
       - redis
     networks:
       - chatbot-service
-    mem_limit: 300M
+    mem_limit: 1G
     logging:
       driver: "json-file"
       options:
