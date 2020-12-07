@@ -9,6 +9,7 @@ app = Celery(
         'tasks.send_line_msg_tasks',
         'tasks.download_and_upload_task',
         'tasks.refresh_cache_for_wp_task',
+        'tasks.weather_tasks',
     ]
 )
 
@@ -18,6 +19,8 @@ app.conf.update(
 
 app.conf.task_routes = {
     'tasks.send_line_msg_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
+    'tasks.weather_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
+
     'tasks.refresh_cache_for_wp_task.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
     'tasks.download_and_upload_task.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
 }
