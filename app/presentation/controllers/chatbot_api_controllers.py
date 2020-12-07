@@ -57,7 +57,7 @@ class LineCallbackController:
             async_send_text_message(event.source.user_id, hint_msg)
 
     def _dispatch_location(self, event: Event):
-        weather_tasks.async_get_forcast_and_send_weather_message_task(
+        weather_tasks.async_get_forecast_and_send_weather_message_task(
             user_id=event.source.user_id,
             lat=event.message.latitude,
             lon=event.message.longitude

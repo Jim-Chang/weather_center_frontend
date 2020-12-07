@@ -12,7 +12,7 @@ class OpenWeatherService(IWeatherService):
 
     API_BASE = 'https://api.openweathermap.org/data/2.5/{}'
 
-    def get_forcast(self, place_name: str = None, lat: float = None, lon: float = None, forcast_data_count: int = 5) -> List[Weather]:
+    def get_forecast(self, place_name: str = None, lat: float = None, lon: float = None, forcast_data_count: int = 5) -> List[Weather]:
         if place_name is None and (lat is None or lon is None):
             raise ValueError('Must provide place name or lat and lon')
 
@@ -29,16 +29,16 @@ class OpenWeatherService(IWeatherService):
             payload['lat'] = lat
             payload['lon'] = lon
 
-        result = requests.get(self.API_BASE.format('forcast'), params=payload)
+        result = requests.get(self.API_BASE.format('forecast'), params=payload)
 
         if (status_code := result.status_code) != 200:
-            logging.error('OpenWeatherService get_forcast status code is {}'.format(status_code))
+            logging.error('OpenWeatherService get_forecast status code is {}'.format(status_code))
             return []
 
         raw_json = result.json()
 
         if (cod_code := raw_json['cod']) != '200':
-            logging.error('OpenWeatherService get_forcast is not success, cod is {}'.format(cod_code))
+            logging.error('OpenWeatherService get_forecast is not success, cod is {}'.format(cod_code))
             return []
 
         return [self._create_weather(data) for data in raw_json['list']]

@@ -8,19 +8,19 @@ from infrastructure.service.weather_service import OpenWeatherService
 
 @pytest.mark.http
 @responses.activate
-def test_open_weather_service__get_forcast():
-    with open('/app/tests/files/open_weather__forcast.json') as f:
+def test_open_weather_service__get_forecast():
+    with open('/app/tests/files/open_weather__forecast.json') as f:
         weather_service_json = json.loads(f.read())
 
     responses.add(
         responses.GET,
-        'https://api.openweathermap.org/data/2.5/forcast',
+        'https://api.openweathermap.org/data/2.5/forecast',
         json=weather_service_json,
         status=200
     )
 
     svc = OpenWeatherService()
-    assert svc.get_forcast(place_name='taipei') == [
+    assert svc.get_forecast(place_name='taipei') == [
         Weather(
             datetime=arrow.get(1607331600).datetime,
             temprature=20.24,
