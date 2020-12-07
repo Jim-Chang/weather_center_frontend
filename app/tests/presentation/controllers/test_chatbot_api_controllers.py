@@ -28,6 +28,16 @@ def test_line_callback_controller__text_message(mock_method, stub_line_signature
     assert controller.handle() is True
     mock_method.assert_called_once()
 
+@pytest.mark.in_memory
+@patch('presentation.controllers.chatbot_api_controllers.LineCallbackController._dispatch_location')
+def test_line_callback_controller__location_message(mock_method, stub_line_signature_validator, unstub):
+    with open('tests/files/line__location_message.json', 'r') as f:
+        data = f.read()
+
+    controller = LineCallbackController(data, '')
+    assert controller.handle() is True
+    mock_method.assert_called_once()
+
 # @pytest.mark.in_memory
 # @patch('tasks.send_line_msg_tasks.async_send_text_message')
 # def test_line_callback_controller__image_message(mock_method, stub_line_signature_validator, unstub):

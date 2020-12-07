@@ -3,11 +3,13 @@ import settings
 
 from presentation.translator.text_command_translator import TextCommandTranslator
 from tasks.send_line_msg_tasks import async_send_text_message
+from tasks import weather_tasks
 
 from linebot import WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import (
     TextMessage,
+    LocationMessage,
     Event,
 )
 # line doc of message event: https://developers.line.biz/zh-hant/reference/messaging-api/#message-event
@@ -25,6 +27,9 @@ class LineCallbackController:
         for event in events:
             if isinstance(event.message, TextMessage):
                 self._dispatch_command(event)
+
+            elif isinstance(event.message, LocationMessage):
+                self._dispatch_location(event)
             
             else:
                 async_send_text_message(event.source.user_id, '這個我還看不懂所以略過哦')
@@ -50,3 +55,10 @@ class LineCallbackController:
                 '\n'.join(TextCommandTranslator.command_map.keys())
             )
             async_send_text_message(event.source.user_id, hint_msg)
+
+    def _dispatch_location(self, event: Event):
+        weather_tasks.async_get_forcast_and_send_weather_message_task(
+            user_id=event.source.user_id,
+            lat=event.message.latitude,
+            lon=event.message.longitude
+        )
