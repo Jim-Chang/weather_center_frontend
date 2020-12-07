@@ -13,4 +13,4 @@ def get_forecast_and_send_weather_message_task(user_id: str, place_name: str, la
     weathers = svc.get_forecast(place_name=place_name, lat=lat, lon=lon)
 
     for weather in weathers:
-        send_text_message(user_id, weathers.format_to_message())
+        send_text_message(user_id, weather.format_to_message())
