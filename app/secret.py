@@ -5,6 +5,7 @@ import os
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get('LINE_CHANNEL_ACCESS_TOKEN')
 LINE_CHANNEL_SECRET = os.environ.get('LINE_CHANNEL_SECRET')
 
+OPEN_WEATHER_APPID = os.environ.get('OPEN_WEATHER_APPID')
 
 
 # db settings

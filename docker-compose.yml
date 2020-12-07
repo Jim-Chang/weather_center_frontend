@@ -100,6 +100,8 @@ services:
       LINE_CHANNEL_ACCESS_TOKEN: "bBjmpT4vqeJ44Dz73JZTevOqFbbYaQuS66C6UTJFdoDZ2GwQgLASkoM/HBqhcWJsfIDJCZoZEICqotlggFlYo/M4ea605jKJy7SoNbxGrYylzl2CTVKcE+/uIp3MQSqurIJMNPFNjgICiggp0bRCcgdB04t89/1O/w1cDnyilFU="
       LINE_CHANNEL_SECRET: "eb46f7b90daecfa30c6d959ac339cea4"
 
+      OPEN_WEATHER_APPID: "c410ae0b72ae983222a1dce5da653f3b"
+
 networks:
   chatbot-service:
     name: chatbot-service-network
