@@ -46,4 +46,7 @@ class LineCallbackController:
             command_func(event)
 
         else:
-            async_send_text_message(event.source.user_id, '不是指令清單裡，所以略過～')
+            hint_msg = '不是指令清單裡，所以略過～\n\n可用指令如下：\n{}'.format(
+                '\n'.join(TextCommandTranslator.command_map.keys())
+            )
+            async_send_text_message(event.source.user_id, hint_msg)
