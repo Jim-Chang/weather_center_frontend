@@ -20,7 +20,7 @@ class DownloadAndUploadTask:
         self._url = url
 
     def execute(self):
-        send_text_message(self._user_id, '開始下載！')
+        send_text_message(self._user_id, '收到網址，啟動 youtube-dl，開始下載！')
         download_result, filename, filesize = self._start_download()
 
         if download_result:
