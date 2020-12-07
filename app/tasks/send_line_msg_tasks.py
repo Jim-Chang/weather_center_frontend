@@ -6,7 +6,7 @@ from linebot.models import TextSendMessage
 
 # send_text_message 的包裝
 def async_send_text_message(user_id: str, text_message: str):
-    send_text_message.apply_async(args=(user_id, text_message,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+    send_text_message.apply_async(args=(user_id, text_message,))
 
 @app.task
 def send_text_message(user_id: str, text_message: str):

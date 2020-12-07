@@ -1,5 +1,4 @@
 import time
-import settings
 from celery_app import app
 from tasks.send_line_msg_tasks import async_send_text_message
 
@@ -9,7 +8,7 @@ from application.wordpress.parse_sitemap import get_all_avaliable_urls
 
 # do_download_and_upload_task 的包裝
 def async_refresh_cache_for_wp_task(user_id: str):
-    refresh_cache_for_wp_task.apply_async(args=(user_id,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+    refresh_cache_for_wp_task.apply_async(args=(user_id,))
 
 @app.task
 def refresh_cache_for_wp_task(user_id: str):

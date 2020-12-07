@@ -1,5 +1,4 @@
 from typing import Tuple
-import settings
 from celery_app import app
 from tasks.send_line_msg_tasks import async_send_text_message
 
@@ -8,7 +7,7 @@ from application.uploader.rclone_uploader import RcloneUploader
 
 # do_download_and_upload_task 的包裝
 def async_do_download_and_upload_task(user_id: str, url: str):
-    do_download_and_upload_task.apply_async(args=(user_id, url,), queue=settings.CHATBOT_SERVICE_CELERY_QUEUE)
+    do_download_and_upload_task.apply_async(args=(user_id, url,))
 
 @app.task
 def do_download_and_upload_task(user_id: str, url: str):
