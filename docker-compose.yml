@@ -68,6 +68,9 @@ services:
       CELERY_WORKER_NUM: 5
       CELERY_LISTEN_QUEUE_NAME: "downloader-queue"
 
+      LINE_CHANNEL_ACCESS_TOKEN: "bBjmpT4vqeJ44Dz73JZTevOqFbbYaQuS66C6UTJFdoDZ2GwQgLASkoM/HBqhcWJsfIDJCZoZEICqotlggFlYo/M4ea605jKJy7SoNbxGrYylzl2CTVKcE+/uIp3MQSqurIJMNPFNjgICiggp0bRCcgdB04t89/1O/w1cDnyilFU="
+      LINE_CHANNEL_SECRET: "eb46f7b90daecfa30c6d959ac339cea4"
+
   chatbot-service--celery_worker--chatbot:
     build:
       context: .
