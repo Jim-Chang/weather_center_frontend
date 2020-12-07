@@ -1,5 +1,5 @@
 from celery_app import app
-from tasks.send_line_msg_tasks import send_text_message
+from tasks.send_line_msg_tasks import send_multi_text_message
 
 from infrastructure.service.weather_service import OpenWeatherService
 
@@ -12,5 +12,4 @@ def get_forecast_and_send_weather_message_task(user_id: str, place_name: str, la
     svc = OpenWeatherService()
     weathers = svc.get_forecast(place_name=place_name, lat=lat, lon=lon)
 
-    for weather in weathers:
-        send_text_message(user_id, weather.format_to_message())
+    send_multi_text_message(user_id, [w.format_to_message() for w in weathers])
