@@ -25,6 +25,12 @@ class Weather:
     def __str__(self):
         return self.format_to_message()
 
+    def __eq__(self, other):
+        return self.datetime == other.datetime and \
+            self.temprature == other.temprature and \
+            self.humidity == other.humidity and \
+            self.descriptions == other.descriptions
+
     def format_to_message(self) -> str:
         '''
         今天 9 點，小雨
@@ -35,7 +41,7 @@ class Weather:
             day=self._get_day_str(),
             hour=self._get_hour(),
             description=self._get_description(),
-            temp=self.temprature,
+            temp=round(self.temprature, 1),
             humidity=self.humidity
         )
 
