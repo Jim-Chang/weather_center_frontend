@@ -1,6 +1,6 @@
 from typing import Tuple
 from celery_app import app
-from tasks.send_line_msg_tasks import async_send_text_message
+from tasks.send_line_msg_tasks import send_text_message
 
 from application.downloader.youtubedl_downloader import YoutubedlDownloader
 from application.uploader.rclone_uploader import RcloneUploader
@@ -20,16 +20,16 @@ class DownloadAndUploadTask:
         self._url = url
 
     def execute(self):
-        async_send_text_message(self._user_id, '開始下載！')
+        send_text_message(self._user_id, '開始下載！')
         download_result, filename, filesize = self._start_download()
 
         if download_result:
-            async_send_text_message(self._user_id, '下載完成！\n\n共 {} MB\n\n檔案名稱為：{}\n\n開始上傳 Google Drive'.format(filesize, filename))
+            send_text_message(self._user_id, '下載完成！\n\n共 {} MB\n\n檔案名稱為：{}\n\n開始上傳 Google Drive'.format(filesize, filename))
             upload_result = self._start_upload(filename)
-            async_send_text_message(self._user_id, '上傳成功！\n\n{}'.format(filename) if upload_result else '上傳失敗...\n\n{}'.format(filename))
+            send_text_message(self._user_id, '上傳成功！\n\n{}'.format(filename) if upload_result else '上傳失敗...\n\n{}'.format(filename))
 
         else:
-            async_send_text_message(self._user_id, '下載失敗哭哭')
+            send_text_message(self._user_id, '下載失敗哭哭')
 
     def _start_download(self) -> Tuple[bool, str]:
         downloader = YoutubedlDownloader()
