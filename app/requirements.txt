@@ -18,3 +18,4 @@ line-bot-sdk==1.17.0
 youtube-dl==2020.11.26
 validators==0.18.1
 beautifulsoup4==4.9.3
+yfinance==0.1.55
