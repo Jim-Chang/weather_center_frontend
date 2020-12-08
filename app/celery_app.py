@@ -10,6 +10,7 @@ app = Celery(
         'tasks.download_and_upload_task',
         'tasks.refresh_cache_for_wp_task',
         'tasks.weather_tasks',
+        'tasks.stock_tasks',
     ]
 )
 
@@ -23,6 +24,7 @@ app.conf.task_routes = {
 
     'tasks.refresh_cache_for_wp_task.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
     'tasks.download_and_upload_task.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
+    'tasks.stock_tasks.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
 }
 
 if __name__ == '__main__':
