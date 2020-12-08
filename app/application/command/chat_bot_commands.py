@@ -19,4 +19,4 @@ def run_get_stock_price_command(event: Event):
     if len(commands) == 2:
         async_get_stock_price_task(event.source.user_id, commands[1])
     else:
-        async_send_text_message('股票的指令有誤哦！範例如下：\n股票 0050.tw')
+        async_send_text_message(event.source.user_id, '股票的指令有誤哦！範例如下：\n股票 0050.tw')

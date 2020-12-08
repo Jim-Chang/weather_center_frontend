@@ -14,6 +14,6 @@ def get_stock_price_task(user_id: str, stock_name: str):
     stock = svc.get_stock(stock_name)
 
     if stock:
-        send_text_message(stock.format_to_message())
+        send_text_message(user_id, stock.format_to_message())
     else:
-        send_text_message('抓股票資訊出問題了！')
+        send_text_message(user_id, '抓股票資訊出問題了！')
