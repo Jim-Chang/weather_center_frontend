@@ -19,7 +19,7 @@ services:
       - "8001:8080"
     networks:
       - chatbot-service
-    mem_limit: 300M
+    mem_limit: 400M
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
     #   interval: 1m
