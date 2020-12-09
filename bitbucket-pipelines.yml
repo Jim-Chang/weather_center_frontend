@@ -13,5 +13,6 @@ pipelines:
           caches:
             - pip
           script:
-            - pip install -r app/requirements.txt
-            - python -m pytest app/tests/* -vv --junitxml=test-reports/report.xml
+            - cd app
+            - pip install -r requirements.txt
+            - python -m pytest -vv --junitxml=test-reports/report.xml
