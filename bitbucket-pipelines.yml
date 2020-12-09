@@ -14,4 +14,4 @@ pipelines:
             - pip
           script:
             - pip install -r app/requirements.txt
-            - pytest -v app/tests/* --junitxml=test-reports/report.xml
+            - python -m pytest app/tests/* -vv --junitxml=test-reports/report.xml
