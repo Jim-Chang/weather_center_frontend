@@ -9,7 +9,7 @@ from infrastructure.service.weather_service import OpenWeatherService
 @pytest.mark.http
 @responses.activate
 def test_open_weather_service__get_forecast():
-    with open('/app/tests/files/open_weather__forecast.json') as f:
+    with open('tests/files/open_weather__forecast.json') as f:
         weather_service_json = json.loads(f.read())
 
     responses.add(
