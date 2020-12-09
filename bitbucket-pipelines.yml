@@ -16,4 +16,4 @@ pipelines:
             - export ENV=local DEBUG=True REDIS_NODE=redis:6379 CELERY_WORKER_NUM=2 CELERY_CHATBOT_QUEUE_NAME=chatbot-queue CELERY_DOWNLOAD_QUEUE_NAME=downloader-queue LINE_CHANNEL_ACCESS_TOKEN='fake-line-token' LINE_CHANNEL_SECRET='fake-line-secret' OPEN_WEATHER_APPID='fake-weather-appid'
             - cd app
             - pip install -r requirements.txt
-            - python -m pytest -vv --junitxml=test-reports/report.xml
+            - python -m pytest -vv -o junit_family=xunit2 --junitxml=test-reports/junit.xml
