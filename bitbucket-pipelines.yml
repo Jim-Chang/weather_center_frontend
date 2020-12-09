@@ -20,7 +20,7 @@ pipelines:
 
   custom: # Pipelines that are triggered manually
     deployment-to-prod:
-      deployment: prod
       - step:
+          deployment: prod
           script:
             - ssh jim@eatpig.tplinkdns.com -p 1022 "cd chatbot && git pull && docker-compose up -d --build"
