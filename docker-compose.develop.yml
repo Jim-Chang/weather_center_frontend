@@ -38,7 +38,8 @@ services:
     environment:
       ENV: "local"
       DEBUG: "True"
-      
+      HTTP_PROC_NUM: 1
+
       REDIS_NODE: "redis:6379"
       CELERY_WORKER_NUM: 2
       CELERY_CHATBOT_QUEUE_NAME: "chatbot-queue"

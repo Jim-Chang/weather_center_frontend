@@ -34,6 +34,7 @@ services:
     environment:
       ENV: "prod"
       SERVE_MODE: "http_adapter"
+      HTTP_PROC_NUM: 2
       REDIS_NODE: "redis:6379"
       
       CELERY_CHATBOT_QUEUE_NAME: "chatbot-queue"
