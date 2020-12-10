@@ -35,3 +35,8 @@ def run_get_forecast_and_send_weather_message_command(event: Event):
         lat=event.message.latitude,
         lon=event.message.longitude
     )
+
+# 回傳 user_id，不需要權限控制
+def run_get_user_id_command(event: Event):
+    from tasks.send_line_msg_tasks import async_send_text_message
+    async_send_text_message(event.source.user_id, event.source.user_id)
