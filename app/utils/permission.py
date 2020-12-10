@@ -10,8 +10,12 @@ from linebot.models import Event
 
 # user id role define
 _role_user_list_map = {
-    RoleType.admin: [],
-    RoleType.home_user: [],
+    RoleType.admin: [
+        'Uebaac5edfee64f6b934a4d27b937cead',    # Jim
+    ],
+    RoleType.home_user: [
+        'U97849deb917944d68c89350ba33a46af',    # Kate
+    ],
 }
 
 # permission with feature define
