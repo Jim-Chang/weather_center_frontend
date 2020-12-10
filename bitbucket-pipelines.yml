@@ -1,8 +1,3 @@
-#  Template python-build
-
-#  This template allows you to validate your python code.
-#  The workflow allows running tests and code linting on the default branch.
-
 image: python:3.8.5
 
 pipelines:
@@ -18,9 +13,15 @@ pipelines:
             - pip install -r requirements.txt
             - python -m pytest -vv -o junit_family=xunit2 --junitxml=test-reports/junit.xml
 
-  custom: # Pipelines that are triggered manually
-    deployment-to-prod:
+  branches:
+    master:
       - step:
-          deployment: prod
+          name: Deploy to Prod
+          deployment: production
           script:
-            - ssh jim@eatpig.tplinkdns.com -p 1022 "cd chatbot && git pull && docker-compose up -d --build"
+            - pipe: atlassian/ssh-run:0.2.8
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $SERVER
+                PORT: $SSH_PORT
+                COMMAND: 'cd /home/jim/chatbot && git pull && docker-compose up -d --build'
