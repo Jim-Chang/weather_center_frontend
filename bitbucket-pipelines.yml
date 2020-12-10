@@ -2,6 +2,9 @@ image: python:3.8.5
 
 commonStep: &testStep 
  - step:
+    name: Test
+    caches:
+      - pip
     script:
       - export ENV=local DEBUG=True REDIS_NODE=redis:6379 CELERY_WORKER_NUM=2 CELERY_CHATBOT_QUEUE_NAME=chatbot-queue CELERY_DOWNLOAD_QUEUE_NAME=downloader-queue LINE_CHANNEL_ACCESS_TOKEN='fake-line-token' LINE_CHANNEL_SECRET='fake-line-secret' OPEN_WEATHER_APPID='fake-weather-appid'
       - cd app
@@ -10,21 +13,11 @@ commonStep: &testStep
 
 pipelines:
   default:
-    - step:
-        name: Test
-        caches:
-          - pip
-        script:
-          - <<: *testStep
+    - <<: *testStep
 
   branches:
     master:
-      - step:
-        name: Test
-        caches:
-          - pip
-        script:
-          - <<: *testStep
+      - <<: *testStep
       - step:
           name: Deploy to Prod
           deployment: production
