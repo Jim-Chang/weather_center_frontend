@@ -4,6 +4,7 @@ from application.command.chat_bot_commands import (
     run_download_and_upload_task_command,
     run_refresh_cache_for_wp_command,
     run_get_stock_price_command,
+    run_get_user_id_command,
 )
 
 class TextCommandTranslator:
@@ -12,6 +13,7 @@ class TextCommandTranslator:
     command_map = {
         '刷新部落格': run_refresh_cache_for_wp_command,
         '股票': run_get_stock_price_command,               # 指令範例 '股票 0050.tw' 
+        '我是誰': run_get_user_id_command,
     }
 
     def decode_command(self, command: str) -> Optional[Type]:
