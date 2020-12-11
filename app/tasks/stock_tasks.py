@@ -17,3 +17,16 @@ def get_stock_price_task(user_id: str, stock_name: str):
         send_text_message(user_id, stock.format_to_message())
     else:
         send_text_message(user_id, '抓股票資訊出問題了！')
+
+@app.task
+def send_0050tw_price_after_close_periodic_task():
+    subscribe_user_ids = [
+        'Uebaac5edfee64f6b934a4d27b937cead'
+    ]
+
+    svc = YfStockService()
+    stock = svc.get_stock('0050.tw')
+
+    if stock:
+        for user_id in subscribe_user_ids:
+            send_text_message(user_id, stock.format_to_message())
