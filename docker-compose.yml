@@ -43,6 +43,28 @@ services:
       LINE_CHANNEL_ACCESS_TOKEN: "bBjmpT4vqeJ44Dz73JZTevOqFbbYaQuS66C6UTJFdoDZ2GwQgLASkoM/HBqhcWJsfIDJCZoZEICqotlggFlYo/M4ea605jKJy7SoNbxGrYylzl2CTVKcE+/uIp3MQSqurIJMNPFNjgICiggp0bRCcgdB04t89/1O/w1cDnyilFU="
       LINE_CHANNEL_SECRET: "eb46f7b90daecfa30c6d959ac339cea4"
 
+  chatbot-service--celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chatbot-service:latest
+    container_name: chatbot-service--celery_beat
+    restart: always
+    depends_on:
+      - redis
+    networks:
+      - chatbot-service
+    mem_limit: 200m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1k"
+        max-file: "3"
+    environment:
+      ENV: "prod"
+      SERVE_MODE: "celery_beat"
+      REDIS_NODE: "redis:6379"    
+    
   chatbot-service--celery_worker--downloader:
     build:
       context: .

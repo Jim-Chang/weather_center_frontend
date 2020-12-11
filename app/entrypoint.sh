@@ -12,6 +12,12 @@ then
 	echo "SERVE MODE: celery_worker"
 	celery --app celery_app worker --concurrency $CELERY_WORKER_NUM --queues $CELERY_LISTEN_QUEUE_NAME --loglevel INFO
 
+# celery beat mode
+elif [ "$SERVE_MODE" = "celery_beat" ]
+then
+	echo "SERVE MODE: celery_beat"
+	celery --app celery_app beat
+
 # container only run migrate
 elif [ "$SERVE_MODE" = "run_migrate" ]
 then
