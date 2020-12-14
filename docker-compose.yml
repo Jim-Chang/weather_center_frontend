@@ -63,7 +63,10 @@ services:
     environment:
       ENV: "prod"
       SERVE_MODE: "celery_beat"
-      REDIS_NODE: "redis:6379"    
+      REDIS_NODE: "redis:6379"
+      
+      CELERY_CHATBOT_QUEUE_NAME: "chatbot-queue"
+      CELERY_DOWNLOAD_QUEUE_NAME: "downloader-queue"
     
   chatbot-service--celery_worker--downloader:
     build:

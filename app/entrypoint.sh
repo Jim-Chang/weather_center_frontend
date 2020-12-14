@@ -16,7 +16,7 @@ then
 elif [ "$SERVE_MODE" = "celery_beat" ]
 then
 	echo "SERVE MODE: celery_beat"
-	celery --app celery_app beat
+	celery --app celery_app beat --loglevel INFO
 
 # container only run migrate
 elif [ "$SERVE_MODE" = "run_migrate" ]
