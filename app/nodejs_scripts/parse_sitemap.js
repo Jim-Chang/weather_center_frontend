@@ -15,8 +15,8 @@ const headers = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)
 
 // 取得所有網站上的 urls
 async function getAllAvaliableUrls() {
-	paths = await parseSitemap()
-	pageNumPaths = await parseContainPageNum(paths)
+	var paths = await parseSitemap()
+	var pageNumPaths = await parseContainPageNum(paths)
 	return paths.concat(pageNumPaths)
 }
 
@@ -29,7 +29,7 @@ async function parseSitemap() {
 	var results = await Promise.all(getBodyTasks)
 
 	var parseTasks = []
-	for (i in results) {
+	for (let i in results) {
 		parseTasks.push(xml2js.parseStringPromise(results[i]))
 	}
 	var parseResults = await Promise.all(parseTasks)

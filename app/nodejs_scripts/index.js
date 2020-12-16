@@ -2,7 +2,7 @@ const startPreload = require('./preloader')
 const getAllAvaliableUrls = require('./parse_sitemap')
 
 function splitPath(paths, pageMaxPathsLen = 10) {
-	splits = []
+	var splits = []
 	for (let i = 0; i < paths.length; i += pageMaxPathsLen) {
 		splits.push(paths.slice(i, i + pageMaxPathsLen))
 	}
@@ -10,7 +10,7 @@ function splitPath(paths, pageMaxPathsLen = 10) {
 }
 
 exports.handler = async (event) => {
-	urls = await getAllAvaliableUrls()
+	var urls = await getAllAvaliableUrls()
 	var pagedPaths = splitPath(urls)
 	for (let i in pagedPaths) {
 		await startPreload(pagedPaths[i])

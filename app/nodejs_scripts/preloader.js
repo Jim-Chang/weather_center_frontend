@@ -11,7 +11,7 @@ function startRequest(path) {
 			headers: headers
 		}
 
-		t = new Date();
+		var t = new Date();
 		https.get(options, (res) => {
 			let headers = res.headers
 
