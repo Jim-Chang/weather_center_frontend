@@ -15,60 +15,55 @@ const headers = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)
 
 // 取得所有網站上的 urls
 async function getAllAvaliableUrls() {
-	var paths = await parseSitemap()
-	var pageNumPaths = await parseContainPageNum(paths)
-	return paths.concat(pageNumPaths)
+	let paths = await parseSitemap()
+	let pageNumPaths = await parseContainPageNum(paths)
+	return [...paths, ...pageNumPaths]
 }
 
 // 從 sitemap 中抓 url
 async function parseSitemap() {
-	var getBodyTasks = []
-	for (let i in sitemapPaths) {
-		getBodyTasks.push(getPageBody(sitemapPaths[i]))
-	}
-	var results = await Promise.all(getBodyTasks)
+	let getBodyTasks = sitemapPaths.map(path => getPageBody(path))
+	let results = await Promise.all(getBodyTasks)
 
-	var parseTasks = []
-	for (let i in results) {
-		parseTasks.push(xml2js.parseStringPromise(results[i]))
-	}
-	var parseResults = await Promise.all(parseTasks)
+	let parseTasks = results.map(r => xml2js.parseStringPromise(r))
+	let parseResults = await Promise.all(parseTasks)
 	console.log('parse sitemap finish')
 
-	var paths = []
+	let paths = []
 	for (let i in parseResults) {
 		for (let j in parseResults[i].urlset.url) {
 			paths.push(parseResults[i].urlset.url[j].loc[0].replace(domain, ''))
 		}
 	}
-	return paths.concat(cvPaths)
+	return [...paths, ...cvPaths]
 }
 
 // 從有分頁的網頁中爬出分頁 urls
 async function parseContainPageNum(rootPaths) {
-	var getBodyTasks = []
-	for (let i in rootPaths) {
-		if (rootPaths[i].includes('category') || rootPaths[i] == '/') {
-			getBodyTasks.push(getPageBody(rootPaths[i]))
+	let getBodyTasks = rootPaths.reduce((result, path) => {
+		if (path.includes('category') || path == '/') {
+			result.push(getPageBody(path))
 		}
-	}
-	var results = await Promise.all(getBodyTasks)
+		return result
+	}, [])
 
-	var paths = []
-	for (let i in results) {
-		var soup = new JSSoup(results[i])
-		var tags = soup.findAll('a', { 'class': 'page' })
-		for (let j in tags) {
-			paths.push(tags[j].attrs.href.replace(domain, '').replace('?preview=true', ''))
-		}
-	}
+	let results = await Promise.all(getBodyTasks)
+
+	let paths = []
+	results.forEach(result => {
+		let soup = new JSSoup(result)
+		let tags = soup.findAll('a', { 'class': 'page' })
+		tags.forEach(tag => {
+			paths.push(tag.attrs.href.replace(domain, '').replace('?preview=true', ''))
+		})
+	})
 	console.log(`find ${paths.length} urls about page nums`)
 	return paths
 }
 
 function getPageBody(path) {
 	return new Promise(resolve => {
-		var options = {
+		let options = {
 			hostname: hostname,
 			path: path + '?preview=true',
 			headers: headers
