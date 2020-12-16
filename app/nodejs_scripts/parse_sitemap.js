@@ -33,6 +33,7 @@ async function parseSitemap() {
 		parseTasks.push(xml2js.parseStringPromise(results[i]))
 	}
 	var parseResults = await Promise.all(parseTasks)
+	console.log('parse sitemap finish')
 
 	var paths = []
 	for (let i in parseResults) {
@@ -61,6 +62,7 @@ async function parseContainPageNum(rootPaths) {
 			paths.push(tags[j].attrs.href.replace(domain, '').replace('?preview=true', ''))
 		}
 	}
+	console.log(`find ${paths.length} urls about page nums`)
 	return paths
 }
 
@@ -71,6 +73,7 @@ function getPageBody(path) {
 			path: path + '?preview=true',
 			headers: headers
 		}
+		console.log(`start get ${domain}${path}?preview=true`)
 
 		https.get(options, (res) => {
 			let body = ''
@@ -84,3 +87,5 @@ function getPageBody(path) {
 		});
 	})
 }
+
+module.exports = getAllAvaliableUrls

@@ -15,7 +15,7 @@ function startRequest(path) {
 		https.get(options, (res) => {
 			let headers = res.headers
 
-			res.on('data', data => { body += data })
+			res.on('data', data => { })
 
 			res.on('end', () => {
 				let totalTime = (new Date() - t);
@@ -26,15 +26,12 @@ function startRequest(path) {
 	})
 }
 
-async function startPreload() {
+async function startPreload(paths) {
 	console.log('preload 10 batch start')
-	await Promise.all([
-		startRequest('/'),
-		startRequest('/')
-	])
+	await Promise.all(paths.map(p => startRequest(p)))
 	console.log('finish')
 }
 
-startPreload()
+module.exports = startPreload
 
 
