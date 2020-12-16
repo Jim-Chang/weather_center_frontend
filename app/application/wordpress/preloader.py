@@ -5,6 +5,8 @@ from application.wordpress.parse_sitemap import get_all_avaliable_urls, split_ur
 
 from utils.log import logging
 
+aws_lambda_url = 'https://nffnrzmc75.execute-api.us-west-2.amazonaws.com/v1/{}'
+
 sess = requests.Session()
 sess.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
@@ -31,5 +33,18 @@ def start_preload(urls=[]):
 
     logging.info('finish')
 
+def start_aws_lambda_preload():
+    logging.info('trigger us-east')
+    sess.get(aws_lambda_url.format('/us-east'))
 
+    logging.info('trigger us-west')
+    sess.get(aws_lambda_url.format('/us-west'))
 
+    logging.info('trigger eu-west')
+    sess.get(aws_lambda_url.format('/eu-west'))
+
+    logging.info('trigger eu-central')
+    sess.get(aws_lambda_url.format('/eu-central'))
+
+    logging.info('trigger ap-southeast')
+    sess.get(aws_lambda_url.format('/ap-southeast'))
