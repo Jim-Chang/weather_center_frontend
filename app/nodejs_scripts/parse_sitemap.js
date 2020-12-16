@@ -1,23 +1,32 @@
 const https = require('https')
+const JSSoup = require('jssoup').default;
 const xml2js = require('xml2js')
 
+const domain = 'https://koding.work'
 const hostname = 'koding.work'
 const sitemapPost = '/post-sitemap.xml'
 const sitemapPage = '/page-sitemap.xml'
 const sitemapCategory = '/category-sitemap.xml'
-const sitemaps = [sitemapPost, sitemapPage, sitemapCategory]
+const sitemapPaths = [sitemapPost, sitemapPage, sitemapCategory]
 
 const cvPaths = ['/cv-en/', '/ch-zh/']
 
 const headers = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36' }
 
+// 取得所有網站上的 urls
+async function getAllAvaliableUrls() {
+	paths = await parseSitemap()
+	pageNumPaths = await parseContainPageNum(paths)
+	return paths.concat(pageNumPaths)
+}
 
+// 從 sitemap 中抓 url
 async function parseSitemap() {
-	var sitemapTasks = []
-	for (i in sitemaps) {
-		sitemapTasks.push(getSitemap(sitemaps[i]))
+	var getBodyTasks = []
+	for (let i in sitemapPaths) {
+		getBodyTasks.push(getPageBody(sitemapPaths[i]))
 	}
-	var results = await Promise.all(sitemapTasks)
+	var results = await Promise.all(getBodyTasks)
 
 	var parseTasks = []
 	for (i in results) {
@@ -25,16 +34,43 @@ async function parseSitemap() {
 	}
 	var parseResults = await Promise.all(parseTasks)
 
+	var paths = []
+	for (let i in parseResults) {
+		for (let j in parseResults[i].urlset.url) {
+			paths.push(parseResults[i].urlset.url[j].loc[0].replace(domain, ''))
+		}
+	}
+	return paths.concat(cvPaths)
 }
 
-function getSitemap(path) {
+// 從有分頁的網頁中爬出分頁 urls
+async function parseContainPageNum(rootPaths) {
+	var getBodyTasks = []
+	for (let i in rootPaths) {
+		if (rootPaths[i].includes('category') || rootPaths[i] == '/') {
+			getBodyTasks.push(getPageBody(rootPaths[i]))
+		}
+	}
+	var results = await Promise.all(getBodyTasks)
+
+	var paths = []
+	for (let i in results) {
+		var soup = new JSSoup(results[i])
+		var tags = soup.findAll('a', { 'class': 'page' })
+		for (let j in tags) {
+			paths.push(tags[j].attrs.href.replace(domain, '').replace('?preview=true', ''))
+		}
+	}
+	return paths
+}
+
+function getPageBody(path) {
 	return new Promise(resolve => {
 		var options = {
 			hostname: hostname,
 			path: path + '?preview=true',
 			headers: headers
 		}
-		console.log(options)
 
 		https.get(options, (res) => {
 			let body = ''
@@ -48,5 +84,3 @@ function getSitemap(path) {
 		});
 	})
 }
-
-parseSitemap()
