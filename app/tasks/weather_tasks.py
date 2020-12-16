@@ -12,4 +12,6 @@ def get_forecast_and_send_weather_message_task(user_id: str, place_name: str, la
     svc = OpenWeatherService()
     weathers = svc.get_forecast(place_name=place_name, lat=lat, lon=lon)
 
-    send_multi_text_message(user_id, [w.format_to_message() for w in weathers])
+    # 節省 line 訊息數，將多個預測結合成一組字串
+    message = '\n\n'.join([w.format_to_message() for w in weathers])
+    send_multi_text_message(user_id, message)
