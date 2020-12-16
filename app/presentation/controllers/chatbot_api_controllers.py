@@ -16,7 +16,7 @@ from linebot.models import (
 
 class LineCallbackController:
 
-    def __init__(self, request_body: dict, signature: str):
+    def __init__(self, request_body: str, signature: str):
         self._request_body = request_body
         self._signature = signature
         self._translator = TextCommandTranslator()
@@ -36,7 +36,7 @@ class LineCallbackController:
 
         return True
 
-    def _extract_events(self, request_body: dict, signature: str) -> List[Event]:
+    def _extract_events(self, request_body: str, signature: str) -> List[Event]:
         parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
         
         try:
