@@ -29,3 +29,16 @@ def test_send_multi_text_message(mock_method):
 def test_async_send_multi_text_message(mock_method):
     tasks.async_send_multi_text_message('fake user id', ['fake msg 1', 'fake msg 2'])
     mock_method.assert_called_once()
+
+@pytest.mark.celery
+@pytest.mark.usefixtures('celery_session_app')
+@pytest.mark.usefixtures('celery_session_worker')
+@patch('linebot.LineBotApi.reply_message')
+def test_send_reply_text_message(mock_method):
+    tasks.send_reply_text_message('fake_reply_token', 'fake msg 1')
+    mock_method.assert_called_once_with('fake_reply_token', TextSendMessage(text='fake msg 1'))
+
+@patch('tasks.send_line_msg_tasks.send_reply_text_message.apply_async')
+def test_async_send_reply_text_message(mock_method):
+    tasks.async_send_reply_text_message('fake_reply_token', 'fake msg 1')
+    mock_method.assert_called_once()

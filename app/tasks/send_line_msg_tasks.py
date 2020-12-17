@@ -45,3 +45,21 @@ def send_multi_text_message(user_id: str, text_messages: List[str]):
         for text_message in text_messages:
             # 如果傳送失敗，就送 slack
             slack.send_message(text_message)
+
+# send_reply_text_message 的包裝
+def async_send_reply_text_message(reply_token: str, text_message: str):
+    send_reply_text_message.apply_async(args=(reply_token, text_message,))
+
+# 使用 reply message api
+@app.task
+def send_reply_text_message(reply_token: str, text_message: str):
+    line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
+    try:
+        line_bot_api.reply_message(
+            reply_token,
+            TextSendMessage(text=text_message)
+        )
+    except Exception:
+        logging.error('send reply text message error', exc_info=True)
+        # 如果傳送失敗，就送 slack
+        slack.send_message(text_message)
