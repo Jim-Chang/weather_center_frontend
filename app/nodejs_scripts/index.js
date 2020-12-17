@@ -1,7 +1,7 @@
 const startPreload = require('./preloader')
 const getAllAvaliableUrls = require('./parse_sitemap')
 
-function splitPath(paths, pageMaxPathsLen = 10) {
+function splitPath(paths, pageMaxPathsLen = 20) {
 	var splits = []
 	for (let i = 0; i < paths.length; i += pageMaxPathsLen) {
 		splits.push(paths.slice(i, i + pageMaxPathsLen))

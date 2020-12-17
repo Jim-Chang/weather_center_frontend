@@ -23,6 +23,6 @@ def refresh_cache_for_wp_task(user_id: str):
     start_preload(urls)
 
     send_text_message(user_id, '觸發 aws lambda preload')
-    start_aws_lambda_preload(urls)
+    start_aws_lambda_preload()
 
     send_text_message(user_id, '刷新 KodingWork cache 完成！')

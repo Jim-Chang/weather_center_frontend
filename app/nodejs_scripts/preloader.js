@@ -27,7 +27,7 @@ function startRequest(path) {
 }
 
 async function startPreload(paths) {
-	console.log('preload 10 batch start')
+	console.log('preload 20 batch start')
 	await Promise.all(paths.map(p => startRequest(p)))
 	console.log('finish')
 }

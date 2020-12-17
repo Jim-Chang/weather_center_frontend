@@ -23,8 +23,8 @@ def start_preload(urls=[]):
     tasks = []
     loop = asyncio.get_event_loop()
     
-    for paged_urls in split_urls(urls, page_max_urls_len=10):
-        logging.info('preload 10 batch start')
+    for paged_urls in split_urls(urls, page_max_urls_len=20):
+        logging.info('preload 20 batch start')
        
         for url in paged_urls:
             tasks.append(asyncio.ensure_future(start_request(url, loop)))
