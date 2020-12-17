@@ -49,6 +49,7 @@ services:
       LINE_CHANNEL_SECRET: "eb46f7b90daecfa30c6d959ac339cea4"
 
       OPEN_WEATHER_APPID: "c410ae0b72ae983222a1dce5da653f3b"
+      SLACK_WEBHOOK: "/TLCN5BC74/B01GNUQ82G7/xQLkYVfXwZislicoeVRCFfB3"
 
 networks:
   chatbot-service:

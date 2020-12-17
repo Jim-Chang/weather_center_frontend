@@ -24,6 +24,7 @@ LINE_CHANNEL_ACCESS_TOKEN = sc.LINE_CHANNEL_ACCESS_TOKEN
 LINE_CHANNEL_SECRET = sc.LINE_CHANNEL_SECRET
 
 OPEN_WEATHER_APPID = sc.OPEN_WEATHER_APPID
+SLACK_WEBHOOK = sc.SLACK_WEBHOOK
 
 # MAIN_DB_URL = 'postgresql+psycopg2://{username}:{password}@{ip}/{db}'.format(
 #     username=sc.MAIN_DB['username'],
