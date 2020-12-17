@@ -3,7 +3,7 @@ import settings
 
 from presentation.translator.text_command_translator import TextCommandTranslator
 from application.command import chat_bot_commands
-from tasks.send_line_msg_tasks import async_send_text_message
+from tasks.send_line_msg_tasks import async_send_reply_text_message
 
 from linebot import WebhookParser
 from linebot.exceptions import InvalidSignatureError
@@ -32,7 +32,7 @@ class LineCallbackController:
                 self._dispatch_location(event)
             
             else:
-                async_send_text_message(event.source.user_id, '這個我還看不懂所以略過哦')
+                async_send_reply_text_message(event.reply_token, '這個我還看不懂所以略過哦')
 
         return True
 
@@ -54,7 +54,7 @@ class LineCallbackController:
             hint_msg = '不是指令清單裡，所以略過～\n\n可用指令如下：\n{}'.format(
                 '\n'.join(TextCommandTranslator.command_map.keys())
             )
-            async_send_text_message(event.source.user_id, hint_msg)
+            async_send_reply_text_message(event.reply_token, hint_msg)
 
     def _dispatch_location(self, event: Event):
         chat_bot_commands.run_get_forecast_and_send_weather_message_command(event)
