@@ -6,13 +6,13 @@ from domain.enums.type import FeatureType
 def run_download_and_upload_task_command(event: Event):
     from tasks.download_and_upload_task import async_do_download_and_upload_task
 
-    async_do_download_and_upload_task(event.source.user_id, event.message.text)
+    async_do_download_and_upload_task(event.source.user_id, event.reply_token, event.message.text)
 
 @check_permission(FeatureType.wordpress)
 def run_refresh_cache_for_wp_command(event: Event):
     from tasks.refresh_cache_for_wp_task import async_refresh_cache_for_wp_task
 
-    async_refresh_cache_for_wp_task(event.source.user_id)
+    async_refresh_cache_for_wp_task(event.source.user_id, event.reply_token)
 
 @check_permission(FeatureType.stock)
 def run_get_stock_price_command(event: Event):

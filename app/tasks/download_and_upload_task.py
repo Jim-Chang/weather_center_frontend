@@ -1,26 +1,27 @@
 from typing import Tuple
 from celery_app import app
-from tasks.send_line_msg_tasks import send_text_message
+from tasks.send_line_msg_tasks import send_text_message, send_reply_text_message
 
 from application.downloader.youtubedl_downloader import YoutubedlDownloader
 from application.uploader.rclone_uploader import RcloneUploader
 
 # do_download_and_upload_task 的包裝
-def async_do_download_and_upload_task(user_id: str, url: str):
-    do_download_and_upload_task.apply_async(args=(user_id, url,))
+def async_do_download_and_upload_task(user_id: str, reply_token: str, url: str):
+    do_download_and_upload_task.apply_async(args=(user_id, reply_token, url,))
 
 @app.task
-def do_download_and_upload_task(user_id: str, url: str):
-    DownloadAndUploadTask(user_id, url).execute()
+def do_download_and_upload_task(user_id: str, reply_token: str, url: str):
+    DownloadAndUploadTask(user_id, reply_token, url).execute()
 
 class DownloadAndUploadTask:
 
-    def __init__(self, user_id: str, url: str):
+    def __init__(self, user_id: str, reply_token: str, url: str):
         self._user_id = user_id
+        self._reply_token = reply_token
         self._url = url
 
     def execute(self):
-        send_text_message(self._user_id, '收到網址，啟動 youtube-dl，開始下載！')
+        send_reply_text_message(self._reply_token, '收到網址，啟動 youtube-dl，開始下載！')
         download_result, filename, filesize = self._start_download()
 
         if download_result:
