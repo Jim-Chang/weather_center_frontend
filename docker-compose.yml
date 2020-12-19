@@ -6,7 +6,7 @@ services:
     restart: always
     networks:
       - chatbot-service
-    mem_limit: 150M
+    mem_limit: 500M
 
   chatbot-service--http_adapter:
     build:
@@ -19,7 +19,7 @@ services:
       - "8001:8080"
     networks:
       - chatbot-service
-    mem_limit: 400M
+    mem_limit: 500M
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:8080/healthcheck"]
     #   interval: 1m
@@ -56,7 +56,7 @@ services:
       - redis
     networks:
       - chatbot-service
-    mem_limit: 300m
+    mem_limit: 500m
     logging:
       driver: "json-file"
       options:
@@ -83,7 +83,7 @@ services:
       - redis
     networks:
       - chatbot-service
-    mem_limit: 1G
+    mem_limit: 2G
     logging:
       driver: "json-file"
       options:
@@ -114,7 +114,7 @@ services:
       - redis
     networks:
       - chatbot-service
-    mem_limit: 600M
+    mem_limit: 700M
     logging:
       driver: "json-file"
       options:
