@@ -40,9 +40,9 @@ class Stock:
         '''
         diff = self.bid - self.pre_close
         if diff > -1:
-            diff_str = '漲 +{}'.format(diff)
+            diff_str = '漲 +{:.2f}'.format(diff)
         else:
-            diff_str = '跌 {}'.format(diff)
+            diff_str = '跌 {:.2f}'.format(diff)
 
         return '{name}\n=> {diff}\n目前：{bid}\n作收：{pre_close}\n最高：{day_high}\n最低：{day_low}\n52周最高：{year_high}\n52周最低：{year_low}'.format(
             name=self.name,
