@@ -34,4 +34,4 @@ def test_stock__format_to_message():
         year_low=6.6
     )
 
-    assert s.format_to_message() == '0050.TW\n目前：1.1\n作收：2.2\n最高：3.3\n最低：4.4\n52周最高：5.5\n52周最低：6.6'
+    assert s.format_to_message() == '0050.TW\n=> 跌 -1.1\n目前：1.1\n作收：2.2\n最高：3.3\n最低：4.4\n52周最高：5.5\n52周最低：6.6'
