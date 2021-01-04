@@ -1,4 +1,5 @@
 from flask import Blueprint, request, make_response
+import settings
 from utils.log import logging
 
 from domain.enums.type import RoleType
@@ -20,7 +21,7 @@ def on_new_record():
     '''
     data = request.json['filename'].split('/')
     camera, date, filename = data[4], data[5], data[6]
-    message = '{} 偵測到動靜！\n日期：{}\n錄影檔名：{}'.format(camera, date, filename)
+    message = '{} 偵測到動靜！\n日期：{}\n錄影檔名：{}\n{}'.format(camera, date, filename, settings.MOTION_GDRIVE_LINK)
     
     for user_id in notify_users:
         if request.json['channel'] == 'line':

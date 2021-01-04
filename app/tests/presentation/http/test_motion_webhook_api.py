@@ -1,4 +1,5 @@
 import pytest
+import settings
 from unittest.mock import patch
 
 from adapter.http import get_app
@@ -18,7 +19,7 @@ def test_on_new_record__line(mock_method):
     )
 
     assert response.status_code == 200
-    mock_method.assert_called_once_with(args=('Uebaac5edfee64f6b934a4d27b937cead', 'Camera1 偵測到動靜！\n日期：2021-01-04\n錄影檔名：12-16-03.mp4'))
+    mock_method.assert_called_once_with(args=('Uebaac5edfee64f6b934a4d27b937cead', 'Camera1 偵測到動靜！\n日期：2021-01-04\n錄影檔名：12-16-03.mp4\n{}'.format(settings.MOTION_GDRIVE_LINK)))
 
 @pytest.mark.http
 @patch('tasks.send_slack_msg_tasks.send_message.apply_async')
@@ -35,4 +36,4 @@ def test_on_new_record__slack(mock_method):
     )
 
     assert response.status_code == 200
-    mock_method.assert_called_once_with(args=('Camera1 偵測到動靜！\n日期：2021-01-04\n錄影檔名：12-16-03.mp4',))
+    mock_method.assert_called_once_with(args=('Camera1 偵測到動靜！\n日期：2021-01-04\n錄影檔名：12-16-03.mp4\n{}'.format(settings.MOTION_GDRIVE_LINK),))
