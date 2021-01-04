@@ -43,6 +43,14 @@ app.conf.beat_schedule = {
         'task': 'tasks.stock_tasks.send_0050tw_price_after_close_periodic_task',
         'schedule': crontab(minute='10', hour='14', day_of_week='mon,tue,wed,thu,fri'),
     },
+    'weekday-start-motion-detection': {
+        'task': 'tasks.motion_tasks.cron_start_detection_task',
+        'schedule': crontab(minute='0', hour='8', day_of_week='mon,tue,wed,thu,fri'),
+    },
+    'weekday-stop-motion-detection': {
+        'task': 'tasks.motion_tasks.cron_stop_detection_task',
+        'schedule': crontab(minute='0', hour='20', day_of_week='mon,tue,wed,thu,fri'),
+    }
 }
 app.conf.timezone = 'Asia/Taipei'
 
