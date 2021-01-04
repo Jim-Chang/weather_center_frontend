@@ -45,6 +45,8 @@ services:
 
       SLACK_WEBHOOK: "/TLCN5BC74/B01GNUQ82G7/xQLkYVfXwZislicoeVRCFfB3"
 
+      MOTION_SERVER_IP: "192.168.68.58"
+
   chatbot-service--celery_beat:
     build:
       context: .
@@ -132,6 +134,8 @@ services:
 
       OPEN_WEATHER_APPID: "c410ae0b72ae983222a1dce5da653f3b"
       SLACK_WEBHOOK: "/TLCN5BC74/B01GNUQ82G7/xQLkYVfXwZislicoeVRCFfB3"
+
+      MOTION_SERVER_IP: "192.168.68.58"
 
 networks:
   chatbot-service:

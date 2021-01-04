@@ -15,6 +15,7 @@ CELERY_DOWNLOAD_QUEUE_NAME = os.environ.get('CELERY_DOWNLOAD_QUEUE_NAME', '')
 # 儲存這個 celery 目前正在聽哪個 queue，主要設定會再 entrypoint 啟動 celery 就設定進去
 CELERY_LISTEN_QUEUE_NAME = os.environ.get('CELERY_LISTEN_QUEUE_NAME', '')
 
+MOTION_SERVER_IP = os.environ.get('MOTION_SERVER_IP', '')
 
 DOWNLOAD_FOLDER_PATH = '/download/{}'
 RCLONE_CONFIG_NAME = 'chatbot-upload'
