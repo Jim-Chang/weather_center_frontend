@@ -5,6 +5,7 @@ import settings
 
 from presentation.configure.chatbot_api_configure import IChatbotApiConfigure, RealChatbotApiConfigure
 from presentation.http.line_message_webhook_api import line_message_webhook_api
+from presentation.http.motion_webhook_api import motion_webhook_api
 
 def get_app(
     chatbot_api_configure: IChatbotApiConfigure = RealChatbotApiConfigure(),
@@ -17,6 +18,7 @@ def get_app(
 
     # register blueprint
     app.register_blueprint(line_message_webhook_api, url_prefix='/webhook/line/message')
+    app.register_blueprint(motion_webhook_api, url_prefix='/webhook/motion')
 
     # setting configure for api
     app.config['CHATBOT_API_CONFIGURE'] = chatbot_api_configure
