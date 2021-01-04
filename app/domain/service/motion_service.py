@@ -12,5 +12,9 @@ class IMotionService(ABC):
         pass
 
     @abstractmethod
+    def set_detection_status(self, camera_id: int, status: MotionDetectionStatus) -> bool:
+        pass
+
+    @abstractmethod
     def get_detection_status(self, camera_id: int) -> MotionDetectionStatus:
         pass

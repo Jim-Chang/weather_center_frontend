@@ -38,6 +38,14 @@ class RealMotionService(IMotionService):
             logging.warning('[Motion] set detection stop fail: {}'.format(r.text))
             return False
 
+    def set_detection_status(self, camera_id: int, status: MotionDetectionStatus) -> bool:
+        if status == MotionDetectionStatus.enable:
+            return self.set_detection_start(camera_id)
+        elif status == MotionDetectionStatus.disable:
+            return self.set_detection_stop(camera_id)
+        
+        return False
+
     def get_detection_status(self, camera_id: int) -> MotionDetectionStatus:
         # 'http://192.168.68.58:7999/0/detection/status'
         r = requests.get('{host}/{camera_id}/detection/status'.format(
