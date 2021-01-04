@@ -8,6 +8,7 @@ app = Celery(
     backend='redis://' + settings.REDIS_NODE,
     include=[
         'tasks.send_line_msg_tasks',
+        'tasks.send_slack_msg_tasks',
         'tasks.download_and_upload_task',
         'tasks.refresh_cache_for_wp_task',
         'tasks.weather_tasks',
@@ -21,6 +22,7 @@ app.conf.update(
 
 app.conf.task_routes = {
     'tasks.send_line_msg_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
+    'tasks.send_slack_msg_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
     'tasks.weather_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
     'tasks.stock_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
 
