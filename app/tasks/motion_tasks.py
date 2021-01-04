@@ -15,7 +15,7 @@ def start_detection_task(reply_token: str, camera_id: int):
     if result:
         msg = '啟動動態偵測完成！'
     else:
-        msg = '啟動動態偵測`失敗`！'
+        msg = '啟動動態偵測 `失敗` ！'
 
     send_reply_text_message(reply_token, msg)
 
@@ -25,12 +25,12 @@ def async_stop_detection_task(reply_token: str, camera_id: int):
 @app.task
 def stop_detection_task(reply_token: str, camera_id: int):
     svc = RealMotionService()
-    result = svc.set_detection_status(camera_id, MotionDetectionStatus.enabl)
+    result = svc.set_detection_status(camera_id, MotionDetectionStatus.disable)
 
     if result:
         msg = '關閉動態偵測完成！'
     else:
-        msg = '關閉動態偵測`失敗`！'
+        msg = '關閉動態偵測 `失敗` ！'
 
     send_reply_text_message(reply_token, msg)
 
@@ -46,6 +46,6 @@ def get_detection_status_task(reply_token: str, camera_id: int):
         msg = '動態偵測有啟動哦！'
 
     else:
-        msg = '動態偵測`沒有`啟動'
+        msg = '動態偵測 `沒有` 啟動'
 
     send_reply_text_message(reply_token, msg)
