@@ -25,6 +25,7 @@ app.conf.task_routes = {
     'tasks.send_slack_msg_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
     'tasks.weather_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
     'tasks.stock_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
+    'tasks.motion_tasks.*': {'queue': settings.CELERY_CHATBOT_QUEUE_NAME},
 
     'tasks.refresh_cache_for_wp_task.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
     'tasks.download_and_upload_task.*': {'queue': settings.CELERY_DOWNLOAD_QUEUE_NAME},
