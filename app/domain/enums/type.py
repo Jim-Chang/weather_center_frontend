@@ -6,6 +6,7 @@ class FeatureType(enum.Enum):
     weather = 'weather'
     stock = 'stock'
     wordpress = 'wordpress'
+    motion = 'motion'
 
 class RoleType(enum.Enum):
     admin = 'admin'

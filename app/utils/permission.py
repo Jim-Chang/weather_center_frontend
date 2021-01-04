@@ -27,6 +27,7 @@ _permission_define_map = {
         FeatureType.youtubedl,
         FeatureType.weather,
         FeatureType.stock,
+        FeatureType.motion,
     ],
     RoleType.anonymous: {
         FeatureType.weather,
