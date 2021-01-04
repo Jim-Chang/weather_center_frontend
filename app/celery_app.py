@@ -2,6 +2,12 @@ from celery import Celery
 from celery.schedules import crontab
 import settings
 
+# 增加 celery task 時注意
+# Celery task 宣告 
+# 和
+# task_routes 宣告
+# 都要補上！
+
 app = Celery(
     settings.SERVICE_NAME,
     broker='redis://' + settings.REDIS_NODE,
@@ -13,6 +19,7 @@ app = Celery(
         'tasks.refresh_cache_for_wp_task',
         'tasks.weather_tasks',
         'tasks.stock_tasks',
+        'tasks.motion_tasks',
     ]
 )
 
