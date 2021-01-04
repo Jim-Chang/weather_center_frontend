@@ -40,3 +40,27 @@ def run_get_forecast_and_send_weather_message_command(event: Event):
 def run_get_user_id_command(event: Event):
     from tasks.send_line_msg_tasks import async_send_reply_text_message
     async_send_reply_text_message(event.reply_token, event.source.user_id)
+
+@check_permission(FeatureType.motion)
+def run_motion_start_detection_command(event: Event):
+    from tasks.motion_tasks import async_start_detection_task
+    async_start_detection_task(
+        reply_token=event.reply_token,
+        camera_id=1   # 目前只有一個 直接 hard code
+    )
+
+@check_permission(FeatureType.motion)
+def run_motion_stop_detection_command(event: Event):
+    from tasks.motion_tasks import async_stop_detection_task
+    async_stop_detection_task(
+        reply_token=event.reply_token,
+        camera_id=1   # 目前只有一個 直接 hard code
+    )
+
+@check_permission(FeatureType.motion)
+def run_motion_get_detection_status_command(event: Event):
+    from tasks.motion_tasks import async_get_detection_status_task
+    async_get_detection_status_task(
+        reply_token=event.reply_token,
+        camera_id=1   # 目前只有一個 直接 hard code
+    )
