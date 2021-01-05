@@ -12,10 +12,14 @@ class RealMotionService(IMotionService):
 
     def set_detection_start(self, camera_id: int) -> bool:
         # 'http://192.168.68.58:7999/0/detection/start'
-        r = requests.get('{host}/{camera_id}/detection/start'.format(
-            host=self._host,
-            camera_id=camera_id
-        ))
+        try:
+            r = requests.get('{host}/{camera_id}/detection/start'.format(
+                host=self._host,
+                camera_id=camera_id
+            ))
+        except Exception:
+            logging.error('[Motion] motion server connect fail', exc_info=True)
+            return False
 
         # Camera 1 Detection resumed\nDone \n'
         if 'resumed' in r.text:
@@ -26,10 +30,14 @@ class RealMotionService(IMotionService):
 
     def set_detection_stop(self, camera_id: int) -> bool:
         # 'http://192.168.68.58:7999/0/detection/pause'
-        r = requests.get('{host}/{camera_id}/detection/pause'.format(
-            host=self._host,
-            camera_id=camera_id
-        ))
+        try:
+            r = requests.get('{host}/{camera_id}/detection/pause'.format(
+                host=self._host,
+                camera_id=camera_id
+            ))
+        except Exception:
+            logging.error('[Motion] motion server connect fail', exc_info=True)
+            return False
 
         # Camera 1 Detection paused\nDone \n'
         if 'paused' in r.text:
@@ -48,10 +56,14 @@ class RealMotionService(IMotionService):
 
     def get_detection_status(self, camera_id: int) -> MotionDetectionStatus:
         # 'http://192.168.68.58:7999/0/detection/status'
-        r = requests.get('{host}/{camera_id}/detection/status'.format(
-            host=self._host,
-            camera_id=camera_id
-        ))
+        try:
+            r = requests.get('{host}/{camera_id}/detection/status'.format(
+                host=self._host,
+                camera_id=camera_id
+            ))
+        except Exception:
+            logging.error('[Motion] motion server connect fail', exc_info=True)
+            return MotionDetectionStatus.disable
 
         # Camera 1 Detection status ACTIVE \n
         if 'ACTIVE' in r.text:
