@@ -39,6 +39,10 @@ app.conf.task_routes = {
 }
 
 app.conf.beat_schedule = {
+    'send-0050tw-price': {
+        'task': 'tasks.stock_tasks.send_0050tw_price_after_close_periodic_task',
+        'schedule': crontab(minute='30', hour='9,10', day_of_week='mon,tue,wed,thu,fri'),
+    },
     'send-0050tw-price-after-close': {
         'task': 'tasks.stock_tasks.send_0050tw_price_after_close_periodic_task',
         'schedule': crontab(minute='10', hour='14', day_of_week='mon,tue,wed,thu,fri'),
