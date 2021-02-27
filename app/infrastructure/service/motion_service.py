@@ -8,7 +8,7 @@ from domain.enums.status import MotionDetectionStatus
 class RealMotionService(IMotionService):
 
     def __init__(self):
-        self._host = 'http://{}:7999'.format(settings.MOTION_SERVER_IP)
+        self._host = 'http://{}'.format(settings.MOTION_SERVER_IP)
 
     def set_detection_start(self, camera_id: int) -> bool:
         # 'http://192.168.68.58:7999/0/detection/start'
