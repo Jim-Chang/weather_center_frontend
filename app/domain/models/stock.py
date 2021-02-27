@@ -39,7 +39,7 @@ class Stock:
         52周最低：67.1
         '''
         diff = self.bid - self.pre_close
-        if diff > -1:
+        if diff >= 0:
             diff_str = '漲 +{:.2f}'.format(diff)
         else:
             diff_str = '跌 {:.2f}'.format(diff)
