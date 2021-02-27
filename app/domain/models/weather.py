@@ -14,8 +14,8 @@ class Weather:
         self,
         datetime: datetime,
         temprature: float,
-        humidity: int,
-        descriptions: List[str],
+        humidity: float,
+        descriptions: List[str] = [],
     ):
         self.datetime = datetime
         self.temprature = temprature
@@ -43,6 +43,19 @@ class Weather:
             description=self._get_description(),
             temp=round(self.temprature, 1),
             humidity=self.humidity
+        )
+
+    def format_to_weather_center_message(self) -> str:
+        '''
+        最後數據
+        氣溫：20 度
+        濕度：86 %
+        記錄時間：2021-01-01 18:00:00
+        '''
+        return '最後數據\n氣溫：{temp} 度\n濕度：{humidity} %\n記錄時間：{recorded_at}'.format(
+            temp=round(self.temprature, 1),
+            humidity=round(self.humidity, 1),
+            recorded_at=arrow.get(self.datetime).format('YYYY-MM-DD hh:mm:ss'),
         )
 
     def _get_day_str(self) -> str:

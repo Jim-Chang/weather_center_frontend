@@ -8,6 +8,7 @@ from application.command.chat_bot_commands import (
     run_motion_start_detection_command,
     run_motion_stop_detection_command,
     run_motion_get_detection_status_command,
+    run_get_last_weather_from_weather_center,
 )
 
 class TextCommandTranslator:
@@ -20,6 +21,7 @@ class TextCommandTranslator:
         '啟動偵測': run_motion_start_detection_command,
         '關閉偵測': run_motion_stop_detection_command,
         '偵測狀態': run_motion_get_detection_status_command,
+        '氣象站': run_get_last_weather_from_weather_center,
     }
 
     def decode_command(self, command: str) -> Optional[Type]:

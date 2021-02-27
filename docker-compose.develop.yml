@@ -54,6 +54,8 @@ services:
       MOTION_SERVER_IP: "192.168.68.58"
       MOTION_GDRIVE_LINK : "https://drive.google.com/drive/folders/1bfHfHxH2Tt-iLlqAqmH5HhnAcx104eiY?usp=sharing"
 
+      WEATHER_CENTER_IP: "192.168.68.57:8002"
+
 networks:
   chatbot-service:
     name: chatbot-service-network

@@ -36,6 +36,12 @@ def run_get_forecast_and_send_weather_message_command(event: Event):
         lon=event.message.longitude
     )
 
+@check_permission(FeatureType.weather)
+def run_get_last_weather_from_weather_center(event: Event):
+    from tasks.weather_tasks import async_get_last_weather_from_weather_center_task
+
+    async_get_last_weather_from_weather_center_task(event.reply_token)
+
 # 回傳 user_id，不需要權限控制
 def run_get_user_id_command(event: Event):
     from tasks.send_line_msg_tasks import async_send_reply_text_message

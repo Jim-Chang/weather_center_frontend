@@ -18,5 +18,7 @@ CELERY_LISTEN_QUEUE_NAME = os.environ.get('CELERY_LISTEN_QUEUE_NAME', '')
 MOTION_SERVER_IP = os.environ.get('MOTION_SERVER_IP', '')
 MOTION_GDRIVE_LINK = os.environ.get('MOTION_GDRIVE_LINK', '')
 
+WEATHER_CENTER_IP = os.environ.get('WEATHER_CENTER_IP', '')
+
 DOWNLOAD_FOLDER_PATH = '/download/{}'
 RCLONE_CONFIG_NAME = 'chatbot-upload'
