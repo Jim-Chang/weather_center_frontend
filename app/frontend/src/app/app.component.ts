@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { WeatherDataService } from './services/weather-data/weather-data.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
+  constructor(private weatherDataService: WeatherDataService) {
+    weatherDataService.getLatestWeatherData().subscribe((data) => {
+      console.log(data);
+    });
+  }
 
   ngOnInit(): void {
   }
