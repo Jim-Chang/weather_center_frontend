@@ -41,7 +41,7 @@ app.conf.task_routes = {
 app.conf.beat_schedule = {
     'send-0050tw-price': {
         'task': 'tasks.stock_tasks.send_0050tw_price_after_close_periodic_task',
-        'schedule': crontab(minute='30', hour='9,10', day_of_week='mon,tue,wed,thu,fri'),
+        'schedule': crontab(minute='30', hour='9,10,11', day_of_week='mon,tue,wed,thu,fri'),
     },
     'send-0050tw-price-after-close': {
         'task': 'tasks.stock_tasks.send_0050tw_price_after_close_periodic_task',
@@ -54,7 +54,11 @@ app.conf.beat_schedule = {
     'weekday-stop-motion-detection': {
         'task': 'tasks.motion_tasks.cron_stop_detection_task',
         'schedule': crontab(minute='0', hour='20', day_of_week='mon,tue,wed,thu,fri'),
-    }
+    },
+    'weekday-send-weather': {
+        'task': 'tasks.weather_task.send_weather_periodic_task',
+        'schedule': crontab(minute='45', hour='6', day_of_week='mon,tue,wed,thu,fri'),
+    },
 }
 app.conf.timezone = 'Asia/Taipei'
 
