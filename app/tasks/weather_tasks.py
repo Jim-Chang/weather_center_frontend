@@ -1,5 +1,5 @@
 from celery_app import app
-from tasks.send_line_msg_tasks import send_reply_text_message
+from tasks.send_line_msg_tasks import send_reply_text_message, send_text_message
 
 from infrastructure.service.weather_service import OpenWeatherService
 from infrastructure.service.weather_center_service import WeatherCenterService
