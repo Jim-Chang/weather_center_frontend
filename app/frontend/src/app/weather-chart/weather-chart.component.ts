@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { WeatherData } from '../types/weather-data';
@@ -8,11 +8,26 @@ import { WeatherData } from '../types/weather-data';
   templateUrl: './weather-chart.component.html',
   styleUrls: ['./weather-chart.component.sass']
 })
-export class WeatherChartComponent implements OnInit {
+export class WeatherChartComponent implements OnInit, OnChanges {
 
   @Input() weatherDatas: WeatherData[] = [];
 
-  lineChartOptions: (ChartOptions & { annotation: any }) = {
+  chartData: ChartDataSets[] = [
+    {
+      label: 'Temperature',
+      yAxisID: 'y-axis-0',
+      data: [],
+    },
+    {
+      label: 'Humidity',
+      yAxisID: 'y-axis-1',
+      data: [],
+    }
+  ];
+
+  chartLabels: Label[] = [];
+
+  chartOptions: ChartOptions = {
     responsive: true,
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
@@ -21,54 +36,44 @@ export class WeatherChartComponent implements OnInit {
         {
           id: 'y-axis-0',
           position: 'left',
+          ticks: {
+            fontColor: 'rgba(148,159,255,1)',
+            max: 40,
+            min: 5,
+          }
         },
         {
           id: 'y-axis-1',
           position: 'right',
           ticks: {
-            fontColor: 'blue',
+            fontColor: 'rgba(77,183,96,1)',
+            max: 100,
+            min: 30,
           }
         }
       ]
-    },
-    annotation: {
-      annotations: [
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: 'March',
-          borderColor: 'orange',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
-          }
-        },
-      ],
-    },
+    }
   };
-  lineChartColors: Color[] = [
+  chartColors: Color[] = [
     { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
+      backgroundColor: 'rgba(148,159,255,0.2)',
+      borderColor: 'rgba(148,159,255,1)',
+      pointBackgroundColor: 'rgba(148,159,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      pointHoverBorderColor: 'rgba(148,159,255,0.8)'
     },
     { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
+      backgroundColor: 'rgba(77,183,96,0.2)',
+      borderColor: 'rgba(77,183,96,1)',
+      pointBackgroundColor: 'rgba(77,183,96,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
+      pointHoverBorderColor: 'rgba(77,183,96,1)'
     },
   ];
-  lineChartLegend = true;
-  lineChartType: ChartType = 'line';
+  chartLegend = true;
+  chartType: ChartType = 'line';
 
   @ViewChild(BaseChartDirective, { static: true }) chart!: BaseChartDirective;
 
@@ -77,23 +82,14 @@ export class WeatherChartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get chartData(): ChartDataSets[] {
-    return [
-      {
-        label: 'Temperature',
-        yAxisID: 'y-axis-0',
-        data: this.weatherDatas.map((data) => data.temperature),
-      },
-      {
-        label: 'Humidity',
-        yAxisID: 'y-axis-1',
-        data: this.weatherDatas.map((data) => data.humidity),
-      }
-    ]
-  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.weatherDatas) {
+      this.chartData[0].data = this.weatherDatas.map((data) => data.temperature);
+      this.chartData[1].data = this.weatherDatas.map((data) => data.humidity);
+      this.chartLabels = this.weatherDatas.map((data) => data.datetime);
 
-  get chartLabels(): Label[] {
-    return this.weatherDatas.map((data) => data.datetime);
+      this.chart.update();
+    }
   }
 
 }
