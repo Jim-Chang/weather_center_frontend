@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { WeatherDataService } from 'Services/weather-data/weather-data.service';
 import { WeatherData } from 'Types/weather-data';
 
@@ -7,7 +7,7 @@ import { WeatherData } from 'Types/weather-data';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   weatherDatas: WeatherData[] = [];
 
@@ -18,6 +18,4 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
 }
