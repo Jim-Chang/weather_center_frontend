@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { WeatherData } from '../types/weather-data';
 
 @Component({
   selector: 'weather-chart',
@@ -9,11 +10,8 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 })
 export class WeatherChartComponent implements OnInit {
 
-  lineChartData: ChartDataSets[] = [
-    { data: [23, 22, 15, 16, 18, 19, 20], label: 'Temperature', yAxisID: 'y-axis-0' },
-    { data: [50, 51, 52, 51, 51, 54, 50], label: 'Humidity', yAxisID: 'y-axis-1' },
-  ];
-  lineChartLabels: Label[] = ['2021/1/1', '2021/1/2', '2021/1/3', '2021/1/4', '2021/1/5', '2021/1/6', '2021/1/7'];
+  @Input() weatherDatas: WeatherData[] = [];
+
   lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -79,13 +77,23 @@ export class WeatherChartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // randomize(): void {
-  //   for (let i = 0; i < this.lineChartData.length; i++) {
-  //     for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-  //       this.lineChartData[i].data[j] = this.generateNumber(i);
-  //     }
-  //   }
-  //   this.chart.update();
-  // }
+  get chartData(): ChartDataSets[] {
+    return [
+      {
+        label: 'Temperature',
+        yAxisID: 'y-axis-0',
+        data: this.weatherDatas.map((data) => data.temperature),
+      },
+      {
+        label: 'Humidity',
+        yAxisID: 'y-axis-1',
+        data: this.weatherDatas.map((data) => data.humidity),
+      }
+    ]
+  }
+
+  get chartLabels(): Label[] {
+    return this.weatherDatas.map((data) => data.datetime);
+  }
 
 }
