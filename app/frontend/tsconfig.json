@@ -19,7 +19,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "Services/*": [ "src/app/services/*" ],
+      "Types/*": [ "src/app/types/*" ],
+      "Components/*": ["src/app/components/*"],
+      "Mock/*": [ "src/app/mock/*" ],
+  }
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

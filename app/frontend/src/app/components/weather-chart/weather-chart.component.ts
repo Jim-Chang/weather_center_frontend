@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
-import { WeatherData } from '../types/weather-data';
+import { WeatherData } from 'Types/weather-data';
 
 @Component({
   selector: 'weather-chart',

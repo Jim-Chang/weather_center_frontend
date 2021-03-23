@@ -4,7 +4,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WeatherChartComponent } from './weather-chart/weather-chart.component';
+import { WeatherChartComponent } from 'Components/weather-chart/weather-chart.component';
 
 @NgModule({
   declarations: [
