@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'filter',
@@ -7,13 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterComponent implements OnInit {
 
+  private filterHoursSubj = new Subject<number>();
+  filterHours$ = this.filterHoursSubj.asObservable();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   onClickFilterBtn(hours: number): void {
-    console.log('onClickFilterBtn', hours);
+    this.filterHoursSubj.next(hours);
   }
 
 }
