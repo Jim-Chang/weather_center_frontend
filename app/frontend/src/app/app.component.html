@@ -1,5 +1,20 @@
 <router-outlet></router-outlet>
 
-<weather-chart
-  [weatherDatas]="weatherDatas"></weather-chart>
-<filter #filter></filter>
+<div class="outer">
+  <div class="inner">
+    <div>
+      <div class="data blue">
+        <h3>{{ lastWeatherData.temperature }} °C</h3>
+      </div>
+      <div class="data green">
+        <h3>{{ lastWeatherData.humidity }} %</h3>
+      </div>
+      <div>
+        <p>{{ lastDiffMinutes }} mins before</p>
+      </div>
+    </div>
+    <weather-chart
+      [weatherDatas]="weatherDatas"></weather-chart>
+    <filter #filter></filter>
+  </div>
+</div>
