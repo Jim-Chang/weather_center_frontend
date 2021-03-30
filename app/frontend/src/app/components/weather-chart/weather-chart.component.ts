@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { WeatherData } from 'Types/weather-data';
+import * as moment from 'moment';
 
 @Component({
   selector: 'weather-chart',
@@ -86,7 +87,7 @@ export class WeatherChartComponent implements OnInit, OnChanges {
     if (changes.weatherDatas) {
       this.chartData[0].data = this.weatherDatas.map((data) => data.temperature);
       this.chartData[1].data = this.weatherDatas.map((data) => data.humidity);
-      this.chartLabels = this.weatherDatas.map((data) => data.datetime);
+      this.chartLabels = this.weatherDatas.map((data) => moment(data.datetime).format('hh:mm'));
 
       this.chart.update();
     }

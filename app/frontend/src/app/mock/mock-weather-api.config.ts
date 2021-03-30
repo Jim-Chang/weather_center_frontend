@@ -3,35 +3,27 @@ import { HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { WeatherData } from 'Types/weather-data';
 
+import * as moment from 'moment';
+
+function getRandTemp(): number {
+  return Math.round((Math.random() * 20 + 15) * 10) / 10;
+}
+
+function getRandHum(): number {
+  return Math.round(Math.random() * 65 + 35);
+}
 
 function queryWeatherData(request: HttpRequest<any>): Observable<HttpEvent<any>> {
-  const fakeData: WeatherData[] = [
-    {
-      datetime: '2021/1/1',
-      temperature: 21,
-      humidity: 60,
-    },
-    {
-      datetime: '2021/1/2',
-      temperature: 23,
-      humidity: 63,
-    },
-    {
-      datetime: '2021/1/3',
-      temperature: 21,
-      humidity: 62,
-    },
-    {
-      datetime: '2021/1/4',
-      temperature: 22,
-      humidity: 66,
-    },
-    {
-      datetime: '2021/1/5',
-      temperature: 25,
-      humidity: 61,
-    },
-  ];
+  const fakeData: WeatherData[] = [];
+  const dataLen = 100
+
+  for (let i = 0; i < dataLen; i++) {
+    fakeData.push({
+      datetime: moment().subtract(dataLen - i, 'minutes').format(),
+      temperature: getRandTemp(),
+      humidity: getRandHum(),
+    });
+  }
 
   return of(
     new HttpResponse({
