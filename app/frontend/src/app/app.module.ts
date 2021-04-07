@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WeatherChartComponent } from 'Components/weather-chart/weather-chart.component';
@@ -20,6 +23,8 @@ import { FilterComponent } from './components/filter/filter.component';
     AppRoutingModule,
     HttpClientModule,
     ChartsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
   ],
   providers: [mockApihttpInterceptorProviders],
   bootstrap: [AppComponent]
