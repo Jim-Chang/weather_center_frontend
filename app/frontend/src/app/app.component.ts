@@ -13,7 +13,9 @@ import * as moment from 'moment';
 export class AppComponent implements OnInit {
 
   weatherDatas: WeatherData[] = [];
-  lastWeatherData: WeatherData = {
+  lastWeatherData: WeatherData;
+
+  private defaultWeatherData: WeatherData = {
     datetime: moment().format(),
     temperature: 0,
     humidity: 0,
@@ -22,9 +24,11 @@ export class AppComponent implements OnInit {
   @ViewChild(FilterComponent, { static: true }) filter!: FilterComponent;
 
   constructor(private weatherDataService: WeatherDataService) {
+    this.lastWeatherData = this.defaultWeatherData;
+
     weatherDataService.getLatestWeatherData().subscribe((data) => {
       this.weatherDatas = data;
-      this.lastWeatherData = data[data.length - 1];
+      this.lastWeatherData = data.length > 0 ? data[data.length - 1] : this.defaultWeatherData;
     });
   }
 
