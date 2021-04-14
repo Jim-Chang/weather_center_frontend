@@ -30,15 +30,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.filter.filterHours$.pipe(
-      mergeMap((hours) => {
-        return this.weatherDataService.queryWeatherData(hours);
-      })
-    ).subscribe((data) => {
-      this.weatherDatas = data;
-      this.lastWeatherData = data[data.length - 1];
-    }, () => {
-      console.log('query weather data error');
-    });
+      mergeMap((hours) => this.weatherDataService.queryWeatherDataByHours(hours))
+    ).subscribe((data) => this.handleWeatherData(data));
+
+    this.filter.filterDateRange$.pipe(
+      mergeMap((dateRange) => this.weatherDataService.queryWeatherDataByDateRange(dateRange))
+    ).subscribe((data) => this.handleWeatherData(data));
+  }
+
+  handleWeatherData(data: WeatherData[]): void {
+    this.weatherDatas = data;
+    this.lastWeatherData = data[data.length - 1];
   }
 
   get lastDiffMinutes(): number {

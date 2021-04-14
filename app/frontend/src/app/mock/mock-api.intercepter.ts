@@ -9,7 +9,7 @@ class MockApiHttpInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const mockEndpointHandler = weatherApiHandler(request);
     if (mockEndpointHandler) {
-      console.log('[MockApiHttpInterceptor]', request.url);
+      console.log('[MockApiHttpInterceptor]', request.url, request.params);
       return mockEndpointHandler(request);
     }
     return next.handle(request);

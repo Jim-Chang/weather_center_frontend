@@ -1,7 +1,7 @@
+import { DateRange } from 'Types/date-range';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDateRangeInput } from '@angular/material/datepicker';
-import { start } from 'node:repl';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -16,7 +16,8 @@ export class FilterComponent implements OnInit {
   private filterHoursSubj = new Subject<number>();
   filterHours$ = this.filterHoursSubj.asObservable();
 
-  private filterDateRangeSubj = new Subject<>();
+  private filterDateRangeSubj = new Subject<DateRange>();
+  filterDateRange$ = this.filterDateRangeSubj.asObservable();
 
   constructor() { }
 
@@ -33,21 +34,11 @@ export class FilterComponent implements OnInit {
       const endDate = this.dateRangeInput.value.end;
 
       if (startDate && endDate) {
-        const startDateFmt = this.formatDate(startDate) + 'T00:00:00';
-        const endDateFmt = this.formatDate(endDate) + 'T23:59:59';
-        console.log(startDateFmt, endDateFmt);
+        this.filterDateRangeSubj.next({
+          startDate,
+          endDate,
+        });
       }
     }
   }
-
-  private formatDate(date: Date): string {
-    var mm = date.getMonth() + 1; // getMonth() is zero-based
-    var dd = date.getDate();
-
-    return [date.getFullYear(),
-    (mm > 9 ? '' : '0') + mm,
-    (dd > 9 ? '' : '0') + dd
-    ].join('-');
-  }
-
 }
