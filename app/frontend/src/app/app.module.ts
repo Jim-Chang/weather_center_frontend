@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WeatherChartComponent } from 'Components/weather-chart/weather-chart.component';
-import { mockApihttpInterceptorProviders } from 'Mock/mock-api.intercepter';
+import { getMockApihttpInterceptorProviders } from 'Mock/mock-api.intercepter';
 import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { FilterComponent } from './components/filter/filter.component';
     MatNativeDateModule,
     MatFormFieldModule,
   ],
-  providers: [mockApihttpInterceptorProviders],
+  providers: [getMockApihttpInterceptorProviders()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

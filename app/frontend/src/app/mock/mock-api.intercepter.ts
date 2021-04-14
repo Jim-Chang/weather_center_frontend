@@ -1,7 +1,8 @@
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { environment as env } from 'src/environments/environment';
 import { weatherApiHandler } from './mock-weather-api.config';
 
 @Injectable()
@@ -20,6 +21,13 @@ class MockApiHttpInterceptor implements HttpInterceptor {
  * How to use:
  * Add this `mockApihttpInterceptorProviders` to providers in AppModule
  */
-export const mockApihttpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: MockApiHttpInterceptor, multi: true },
-];
+export function getMockApihttpInterceptorProviders(): Provider[] {
+  let mockApihttpInterceptorProviders: any[] = [];
+  if (env.isMockApi) {
+    mockApihttpInterceptorProviders = [
+      { provide: HTTP_INTERCEPTORS, useClass: MockApiHttpInterceptor, multi: true },
+    ];
+  }
+  return mockApihttpInterceptorProviders;
+}
+
