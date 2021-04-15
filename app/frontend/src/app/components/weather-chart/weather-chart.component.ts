@@ -30,6 +30,11 @@ export class WeatherChartComponent implements OnInit, OnChanges {
 
   chartOptions: ChartOptions = {
     responsive: true,
+    elements: {
+      point: {
+        radius: 0,
+      }
+    },
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{}],
