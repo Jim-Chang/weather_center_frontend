@@ -11,12 +11,13 @@ import * as moment from 'moment';
 })
 export class WeatherDataService {
 
+  defaultQueryHours = 3;
   private queryWeatherDataUrl = `/api/v1/weather/query`;
 
   constructor(private http: HttpClient) { }
 
   getLatestWeatherData(): Observable<WeatherData[]> {
-    return this.queryWeatherDataByHours(3);
+    return this.queryWeatherDataByHours(this.defaultQueryHours);
   }
 
   queryWeatherDataByHours(hours: number): Observable<WeatherData[]> {
