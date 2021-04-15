@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { FilterComponent } from './components/filter/filter.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatProgressBarModule,
   ],
   providers: [getMockApihttpInterceptorProviders()],
   bootstrap: [AppComponent]

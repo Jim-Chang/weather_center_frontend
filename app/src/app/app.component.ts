@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
 
   weatherDatas: WeatherData[] = [];
   lastWeatherData: WeatherData;
+  showProgress = true;
 
   private defaultWeatherData: WeatherData = {
     datetime: moment().format(),
@@ -31,8 +32,7 @@ export class AppComponent implements OnInit {
 
     weatherDataService.getLatestWeatherData().subscribe((data) => {
       this.lastQueryHours = weatherDataService.defaultQueryHours;
-      this.weatherDatas = data;
-      this.lastWeatherData = data.length > 0 ? data[data.length - 1] : this.defaultWeatherData;
+      this.handleWeatherData(data);
     });
   }
 
@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
     this.filter.filterHours$.pipe(
       mergeMap((hours) => {
         this.lastQueryHours = hours;
+        this.showProgress = true;
         return this.weatherDataService.queryWeatherDataByHours(hours)
       })
     ).subscribe((data) => this.handleWeatherData(data));
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit {
     this.filter.filterDateRange$.pipe(
       mergeMap((dateRange) => {
         this.lastQueryHours = 0;
+        this.showProgress = true;
         return this.weatherDataService.queryWeatherDataByDateRange(dateRange)
       })
     ).subscribe((data) => this.handleWeatherData(data));
@@ -54,6 +56,7 @@ export class AppComponent implements OnInit {
     timer(60000, 60000).pipe(
       mergeMap(() => {
         if (this.lastQueryHours > 0) {
+          this.showProgress = true;
           return this.weatherDataService.queryWeatherDataByHours(this.lastQueryHours)
         }
         return of(null);
@@ -67,7 +70,8 @@ export class AppComponent implements OnInit {
 
   handleWeatherData(data: WeatherData[]): void {
     this.weatherDatas = data;
-    this.lastWeatherData = data[data.length - 1];
+    this.lastWeatherData = data.length > 0 ? data[data.length - 1] : this.defaultWeatherData;
+    this.showProgress = false;
   }
 
   get lastDiffMinutes(): number {
